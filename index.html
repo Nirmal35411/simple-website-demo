@@ -29,11 +29,9 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
     </div>
-
     <!-- Right side actions: Login/Sign Up left of Cart -->
     <div class="nav-actions">
       <button id="authButton" class="auth-btn">Login / Sign Up</button>
-
       <!-- Profile shown only when logged in -->
       <div id="profile" class="profile" aria-haspopup="menu" aria-expanded="false">
         <button id="profileBtn" class="profile-btn" aria-label="User menu">
@@ -45,29 +43,43 @@
           <a href="#" id="logout" role="menuitem">Logout</a>
         </div>
       </div>
-
       <!-- Existing cart icon/button -->
-      <a id="cart" class="cart" href="#cart" aria-label="Cart">
-        🛒
-      </a>
+      <a id="cart" class="cart" href="#cart" aria-label="Cart">🛒</a>
     </div>
   </nav>
 
-  <!-- Existing page content (kept minimal here because original file excerpt was partial) -->
-  <main>
-    <section id="menu">
-      <!-- menu items here -->
-    </section>
-  </main>
+  <header>
+    <h1>Welcome to Litterateur Cafe</h1>
+    <p>Luxury Food Delivery</p>
+  </header>
+
+  <section id="menu">
+    <h2>Our Menu</h2>
+    <p>Discover our exquisite selection of gourmet dishes.</p>
+  </section>
+
+  <section id="about">
+    <h2>About Us</h2>
+    <p>We bring luxury dining to your doorstep.</p>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Get in touch with us for reservations and inquiries.</p>
+  </section>
+
+  <footer>
+    <p>&copy; 2024 Litterateur Cafe. All rights reserved.</p>
+  </footer>
 
   <script>
-    // Helper to reflect auth state in navbar
-    function updateAuthUI(){
+    // Dynamic Login/Profile UI Logic
+    function updateAuthUI() {
       const loggedIn = localStorage.getItem('userLoggedIn') === 'true';
       const authBtn = document.getElementById('authButton');
       const profile = document.getElementById('profile');
-      if(!authBtn || !profile) return;
-      if(loggedIn){
+      if (!authBtn || !profile) return;
+      if (loggedIn) {
         authBtn.style.display = 'none';
         profile.style.display = 'inline-flex';
       } else {
@@ -75,41 +87,37 @@
         profile.style.display = 'none';
       }
     }
-
     // Mock actions for demo integration
-    document.addEventListener('click', function(e){
+    document.addEventListener('click', function(e) {
       const profile = document.getElementById('profile');
       const btn = document.getElementById('profileBtn');
-      if(profile && btn){
-        if(btn.contains(e.target)){
+      if (profile && btn) {
+        if (btn.contains(e.target)) {
           const open = profile.classList.toggle('open');
           profile.setAttribute('aria-expanded', String(open));
-        } else if(!profile.contains(e.target)){
+        } else if (!profile.contains(e.target)) {
           profile.classList.remove('open');
           profile.setAttribute('aria-expanded','false');
         }
       }
     });
-
     // Login/Sign Up button toggles demo login state (replace with real modal/flow)
     const authBtn = document.getElementById('authButton');
-    if(authBtn){
-      authBtn.addEventListener('click', function(){
+    if (authBtn) {
+      authBtn.addEventListener('click', function() {
         localStorage.setItem('userLoggedIn', 'true');
         updateAuthUI();
       });
     }
-
     // Logout clears state
     const logout = document.getElementById('logout');
-    if(logout){
-      logout.addEventListener('click', function(e){
+    if (logout) {
+      logout.addEventListener('click', function(e) {
         e.preventDefault();
         localStorage.setItem('userLoggedIn', 'false');
         updateAuthUI();
       });
     }
-
     // Initialize on load
     document.addEventListener('DOMContentLoaded', updateAuthUI);
     // Also run immediately in case script is at bottom
