@@ -6,7 +6,7 @@
   <title>Litterateur Cafe - Luxury Food Delivery</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    body {font-family: 'Montserrat', Arial, sans-serif; background: #faf6f4; margin: 0;}
+    body { font-family: 'Montserrat', Arial, sans-serif; background: #faf6f4; margin: 0;}
     html { scroll-behavior: smooth; }
     nav {background: #101820; color: #fff; padding: 1rem 0; text-align: center; font-weight: 600; position: sticky; top:0; z-index:10}
     nav a {color: #ebc934; text-decoration: none; margin: 0 16px;}
@@ -20,7 +20,6 @@
     section {padding: 3em 1em; max-width: 1100px; margin: auto;}
     h2 {color: #101820;}
     .card {background: #fff; padding: 1.2em; border-radius: 16px; box-shadow: 0 3px 16px rgba(0,0,0,0.09);}
-
     /* Unified menu styles (from Menu page.html) */
     .menu-controls {display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin: 10px 0 24px}
     .chip {padding: 8px 14px; border-radius: 20px; border:1px solid #ddd; background:#fff; cursor:pointer}
@@ -29,144 +28,80 @@
     .menu-item h4 {margin: 8px 0 6px}
     .price {font-weight:700;color:#ebc934}
     .menu-item .meta {color:#6b6b6b; font-size: 0.95em}
-
-    /* Cart */
-    .cart {position: sticky; top: 76px; background:#fff; border:1px solid #eee; border-radius:16px; padding:16px}
-    .cart h3 {margin-top:0}
-    .cart-list {max-height: 260px; overflow:auto; margin: 8px 0}
-    .cart-row {display:flex; justify-content:space-between; gap:10px; padding:6px 0; border-bottom:1px dashed #eee}
-    .cart-total {display:flex; justify-content:space-between; font-weight:700}
-    .grid-2 {display:grid; grid-template-columns: 1fr 320px; gap:20px}
-    @media(max-width: 900px){ .grid-2{grid-template-columns:1fr;} .cart{position:relative; top:auto}}
   </style>
 </head>
 <body>
-  <!-- Navigation Bar -->
   <nav>
-    <a href="#top">Home</a> |
+    <a href="#home">Home</a> |
     <a href="#menu">Menu</a> |
-    <a href="login page.html">Login / Signup</a> |
-    <a href="#rewards">Referral Rewards</a> |
-    <a href="#rewards">Token Rewards</a> |
-    <a href="#cart">Cart & Checkout</a> |
-    <a href="user dashboard.html">User Dashboard</a> |
-    <a href="Admin Page.html">Admin Dashboard</a>
+    <a href="#about">About</a> |
+    <a href="#contact">Contact</a>
   </nav>
 
-  <!-- Hero Section -->
-  <a id="top"></a>
-  <div class="hero">
-    <div class="hero-title">Litterateur Cafe</div>
-    <div class="hero-subtitle">Where Every Bite Tells a Story</div>
-    <div class="hero-description">
-      Luxury dining delivered to you. Enjoy our chef-crafted menu, world-class coffee blends, and rewards with every order!
-    </div>
+  <section class="hero" id="home">
+    <h1 class="hero-title">Litterateur Cafe</h1>
+    <p class="hero-subtitle">Savor Luxury in Every Bite</p>
+    <p class="hero-description">Experience gourmet meals delivered straight to your door, crafted with passion and perfection.</p>
     <div class="hero-buttons">
-      <a class="btn" href="#menu">Order Now</a>
-      <a class="btn btn-secondary" href="#rewards">Join Rewards</a>
+      <a href="#menu"><button class="btn">Explore Our Menu</button></a>
+      <button class="btn btn-secondary">Special Offers</button>
     </div>
-  </div>
+  </section>
 
-  <!-- Unified Menu Section -->
   <section id="menu">
     <h2>Our Menu</h2>
-    <div class="menu-controls" id="filters">
+    <div class="menu-controls">
       <button class="chip active" data-filter="all">All</button>
-      <button class="chip" data-filter="breakfast">Breakfast</button>
-      <button class="chip" data-filter="lunch">Lunch</button>
-      <button class="chip" data-filter="dinner">Dinner</button>
-      <button class="chip" data-filter="beverages">Beverages</button>
-      <button class="chip" data-filter="desserts">Desserts</button>
-      <button class="chip" data-filter="specials">Specials</button>
+      <button class="chip" data-filter="veg">Veg</button>
+      <button class="chip" data-filter="non-veg">Non-Veg</button>
+      <button class="chip" data-filter="dessert">Desserts</button>
+      <button class="chip" data-filter="beverage">Beverages</button>
     </div>
-
-    <div class="grid-2">
-      <div class="menu-grid" id="menuGrid">
-        <!-- Items migrated from Menu page.html -->
-        <div class="card menu-item" data-cat="lunch specials">
-          <h4>Truffle Risotto Supreme</h4>
-          <div class="meta">Creamy arborio rice, black truffle, wild mushrooms</div>
-          <div class="price">₹499</div>
-          <button class="btn add" data-name="Truffle Risotto Supreme" data-price="499">Add</button>
-        </div>
-        <div class="card menu-item" data-cat="beverages breakfast">
-          <h4>Literary Blend Coffee</h4>
-          <div class="meta">Ethiopian beans, notes of chocolate and citrus</div>
-          <div class="price">₹199</div>
-          <button class="btn add" data-name="Literary Blend Coffee" data-price="199">Add</button>
-        </div>
-        <div class="card menu-item" data-cat="desserts">
-          <h4>Poet's Chocolate Soufflé</h4>
-          <div class="meta">Warm chocolate soufflé, vanilla bean ice cream</div>
-          <div class="price">₹299</div>
-          <button class="btn add" data-name="Poet's Chocolate Soufflé" data-price="299">Add</button>
-        </div>
-        <!-- Additional example items to reflect full page -->
-        <div class="card menu-item" data-cat="breakfast">
-          <h4>Avocado Sourdough Toast</h4>
-          <div class="meta">Heirloom tomatoes, feta, basil oil</div>
-          <div class="price">₹249</div>
-          <button class="btn add" data-name="Avocado Sourdough Toast" data-price="249">Add</button>
-        </div>
-        <div class="card menu-item" data-cat="lunch">
-          <h4>Grilled Chicken Panini</h4>
-          <div class="meta">Pesto, sun-dried tomatoes, mozzarella</div>
-          <div class="price">₹329</div>
-          <button class="btn add" data-name="Grilled Chicken Panini" data-price="329">Add</button>
-        </div>
-        <div class="card menu-item" data-cat="dinner specials">
-          <h4>Herb-crusted Salmon</h4>
-          <div class="meta">Lemon butter, asparagus</div>
-          <div class="price">₹569</div>
-          <button class="btn add" data-name="Herb-crusted Salmon" data-price="569">Add</button>
-        </div>
-        <div class="card menu-item" data-cat="beverages">
-          <h4>Classic Cappuccino</h4>
-          <div class="meta">Double shot, microfoam</div>
-          <div class="price">₹179</div>
-          <button class="btn add" data-name="Classic Cappuccino" data-price="179">Add</button>
-        </div>
-        <div class="card menu-item" data-cat="desserts">
-          <h4>New York Cheesecake</h4>
-          <div class="meta">Berry compote</div>
-          <div class="price">₹259</div>
-          <button class="btn add" data-name="New York Cheesecake" data-price="259">Add</button>
-        </div>
+    <div class="menu-grid">
+      <div class="card menu-item" data-cat="veg">
+        <h4>Truffle Risotto</h4>
+        <p class="meta">Italian | Veg</p>
+        <p class="price">₹450</p>
       </div>
-
-      <aside class="cart" id="cart">
-        <h3>Your Cart</h3>
-        <div class="cart-list" id="cartList"></div>
-        <div class="cart-total"><span>Total</span><span id="cartTotal">₹0</span></div>
-        <button class="btn" id="checkoutBtn">Checkout</button>
-      </aside>
+      <div class="card menu-item" data-cat="non-veg">
+        <h4>Grilled Salmon</h4>
+        <p class="meta">Continental | Non-Veg</p>
+        <p class="price">₹750</p>
+      </div>
+      <div class="card menu-item" data-cat="veg">
+        <h4>Margherita Pizza</h4>
+        <p class="meta">Italian | Veg</p>
+        <p class="price">₹350</p>
+      </div>
+      <div class="card menu-item" data-cat="dessert">
+        <h4>Tiramisu</h4>
+        <p class="meta">Italian | Dessert</p>
+        <p class="price">₹280</p>
+      </div>
+      <div class="card menu-item" data-cat="beverage">
+        <h4>Cold Brew Coffee</h4>
+        <p class="meta">Beverage</p>
+        <p class="price">₹180</p>
+      </div>
+      <div class="card menu-item" data-cat="non-veg">
+        <h4>Chicken Alfredo</h4>
+        <p class="meta">Italian | Non-Veg</p>
+        <p class="price">₹550</p>
+      </div>
     </div>
   </section>
 
-  <!-- How It Works / Rewards -->
-  <section id="rewards">
-    <h2>How It Works</h2>
-    <div class="card">Referral Rewards — Share our cafe, earn up to 60% off!</div>
-    <br />
-    <div class="card">Token Rewards — Collect tokens on every order, unlock discounts & gifts.</div>
+  <section id="about">
+    <h2>About Us</h2>
+    <p class="card">At Litterateur Cafe, we believe food is an art. Every dish we prepare is a masterpiece, combining traditional recipes with modern innovation. We source only the finest ingredients to ensure every meal is memorable.</p>
   </section>
 
-  <!-- Reviews -->
-  <section>
-    <h2>What Our Customers Say</h2>
-    <div class="card">⭐⭐⭐⭐⭐ "Exceptional! Truffle risotto was 10/10." — Sarah M.</div>
-    <br />
-    <div class="card">⭐⭐⭐⭐⭐ "Coffee is perfection. Delivery was fast!" — James L.</div>
-  </section>
-
-  <!-- Contact -->
-  <section>
+  <section id="contact">
     <h2>Contact Us</h2>
     <div class="card">
-      Phone: (555) 123-4567<br />
-      Email: hello@litterateurcafe.com<br />
-      Address: 123 Culinary Street, Gourmet District<br />
-      Hours: Daily: 8:00 AM - 10:00 PM
+      <p><strong>Phone:</strong> +91-9876543210</p>
+      <p><strong>Email:</strong> hello@litterateurcafe.com</p>
+      <p><strong>Address:</strong> 123, Food Street, Gourmet City</p>
     </div>
   </section>
 
@@ -186,34 +121,6 @@
         const cats = it.dataset.cat.split(' ');
         it.style.display = (cat==='all' || cats.includes(cat)) ? '' : 'none';
       });
-    });
-
-    // Cart logic
-    const cart = {};
-    function renderCart(){
-      const list = document.getElementById('cartList');
-      list.innerHTML = '';
-      let total = 0;
-      Object.entries(cart).forEach(([name, info])=>{
-        total += info.price * info.qty;
-        const row = document.createElement('div');
-        row.className = 'cart-row';
-        row.innerHTML = `<span>${name} × ${info.qty}</span><strong>₹${info.price*info.qty}</strong>`;
-        list.appendChild(row);
-      });
-      document.getElementById('cartTotal').textContent = `₹${total}`;
-    }
-    document.addEventListener('click', (e)=>{
-      const add = e.target.closest('.add');
-      if(!add) return;
-      const name = add.dataset.name;
-      const price = Number(add.dataset.price);
-      cart[name] = cart[name] || {price, qty:0};
-      cart[name].qty++;
-      renderCart();
-    });
-    document.getElementById('checkoutBtn')?.addEventListener('click', ()=>{
-      alert('Checkout coming soon!');
     });
   </script>
 </body>
