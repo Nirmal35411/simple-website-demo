@@ -1,3 +1,41 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBWmy4dfVjhl6C5azCbZwdzKi34NnkEvb0",
+  authDomain: "litterateur-cafe.firebaseapp.com",
+  projectId: "litterateur-cafe",
+  storageBucket: "litterateur-cafe.firebasestorage.app",
+  messagingSenderId: "995822372601",
+  appId: "1:995822372601:web:0ef53c26b3cc8d9aeb0428",
+  measurementId: "G-C8275D85ZJ"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+function emailSignIn(email, password) {
+  signInWithEmailAndPassword(auth, email, password)
+    .then(userCredential => {
+      console.log("Signed in:", userCredential.user);
+    })
+    .catch(error => {
+      console.error(error.message);
+    });
+}
+
+function googleSignIn() {
+  const provider = new GoogleAuthProvider();
+  signInWithPopup(auth, provider)
+    .then(result => {
+      console.log("Google sign in:", result.user);
+    })
+    .catch(error => {
+      console.error(error.message);
+    });
+}
+
 // Site-wide JavaScript for Litterateur Cafe Website
 
 // Initialize all functionalities when the DOM is loaded
