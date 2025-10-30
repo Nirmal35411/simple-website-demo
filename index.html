@@ -6,37 +6,257 @@
   <title>Litterateur Cafe - Luxury Food Delivery</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    body { font-family: 'Montserrat', Arial, sans-serif; background: #faf6f4; margin: 0;}
+    body {
+      font-family: 'Montserrat', Arial, sans-serif;
+      background: linear-gradient(120deg, #f9efd4 0%, #fff5d2 100%);
+      margin: 0;
+      color: #2e2e2e;
+    }
     html { scroll-behavior: smooth; }
-    nav {background: #101820; color: #fff; padding: 1rem 0; text-align: center; font-weight: 600; position: sticky; top:0; z-index:10}
-    nav a {color: #ebc934; text-decoration: none; margin: 0 16px;}
-    .hero {background: linear-gradient(110deg, #ebc934 70%, #f3e7d8 100%); padding: 60px 0; text-align: center;}
-    .hero-title {font-size: 3em; margin-bottom: 0.2em; font-weight: 900; color: #101820;}
-    .hero-subtitle {font-size: 1.4em; color: #6F4436; font-weight: 500; margin-bottom: 1rem;}
-    .hero-description {color: #363636; font-size: 1em; margin-bottom: 2em;}
-    .hero-buttons {margin-top: 2em;}
-    .btn {padding: 1em 2em; border-radius: 35px; font-weight: 700; font-size: 1em; background: #101820; color: #fff; border: none; cursor: pointer; transition: 0.2s;}
-    .btn-secondary {background: #ebc934; color: #101820;}
-    section {padding: 3em 1em; max-width: 1100px; margin: auto;}
-    h2 {color: #101820;}
-    .card {background: #fff; padding: 1.2em; border-radius: 16px; box-shadow: 0 3px 16px rgba(0,0,0,0.09);}
-    /* Unified menu styles (from Menu page.html) */
-    .menu-controls {display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin: 10px 0 24px}
-    .chip {padding: 8px 14px; border-radius: 20px; border:1px solid #ddd; background:#fff; cursor:pointer}
-    .chip.active {background:#101820; color:#ebc934; border-color:#101820}
-    .menu-grid {display:grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap:16px}
-    .menu-item h4 {margin: 8px 0 6px}
-    .price {font-weight:700;color:#ebc934}
-    .menu-item .meta {color:#6b6b6b; font-size: 0.95em}
+    /* Premium nav styling */
+    nav {
+      background: rgba(16,24,32,0.94);
+      color: #fff;
+      padding: 0.6rem 0 0.6rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 12px rgba(43,43,43,0.11);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 600;
+      font-size: 1.1em;
+    }
+    .nav-main {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin-left: 40px;
+    }
+    .nav-main a {
+      color: #ebc934;
+      text-decoration: none;
+      padding: 3px 12px;
+      border-radius: 28px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-main a:hover {
+      background: #ebc9341e;
+      color: #fff;
+    }
+    .cart-area {
+      margin-right: 45px;
+      position: relative;
+    }
+    .cart-btn {
+      background: #ebc934;
+      color: #101820;
+      font-weight: 700;
+      border-radius: 24px;
+      padding: 0.43em 1.09em 0.43em 2.3em;
+      border: none;
+      box-shadow: 0 2px 8px #fde86b45;
+      cursor: pointer;
+      font-size: 1.1em;
+      position: relative;
+    }
+    .cart-btn::before {
+      content: '🛒';
+      position: absolute;
+      left: 10px;
+      font-size: 1.24em;
+    }
+
+    /* Hero section premium styling */
+    .hero {
+      background: linear-gradient(110deg, #ebc934 70%, #f3e7d8 100%);
+      padding: 72px 0 64px 0;
+      text-align: center;
+      border-radius: 0 0 58px 58px;
+      box-shadow: 0 12px 48px rgba(235,201,52,0.15);
+      margin-bottom: 10px;
+    }
+    .hero-title {
+      font-size: 3.4em;
+      margin-bottom: 0.2em;
+      font-weight: 900;
+      color: #101820;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 24px #ebc9344e;
+    }
+    .hero-subtitle {
+      font-size: 1.45em;
+      color: #6F4436;
+      font-weight: 600;
+      margin-bottom: 1.4rem;
+      letter-spacing: .8px;
+    }
+    .hero-description {
+      color: #363636;
+      font-size: 1.15em;
+      margin-bottom: 2.4em;
+      font-weight: 500;
+      letter-spacing: .5px;
+    }
+    .hero-buttons {
+      margin-top: 2.1em;
+      display: flex;
+      gap: 28px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      padding: 1em 2.1em;
+      border-radius: 35px;
+      font-weight: 700;
+      font-size: 1.1em;
+      background: #101820;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: box-shadow 0.16s, background 0.16s, color 0.17s;
+      box-shadow: 0 3px 14px #10182014;
+    }
+    .btn:hover {
+      background: #ebc934;
+      color: #101820;
+    }
+    .btn.btn-secondary {
+      background: #ebc934;
+      color: #101820;
+      border: 1.7px solid #101820;
+    }
+    .btn.btn-secondary:hover {
+      background: #101820;
+      color: #ebc934;
+    }
+
+    /* Section styles */
+    section {
+      padding: 3.2em 1.4em;
+      max-width: 1080px;
+      margin: auto;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.78);
+      box-shadow: 0 4px 24px rgba(229, 190, 53, 0.06);
+      margin-bottom: 18px;
+    }
+    h2 {
+      color: #101820;
+      font-size: 2.1em;
+      font-weight: 800;
+      letter-spacing: .7px;
+      margin-bottom: 0.6em;
+      text-shadow: 0 1px 12px #ebc9340a;
+    }
+    .card {
+      background: #fff;
+      padding: 1.4em 1.3em;
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      margin-bottom: 14px;
+    }
+
+    /* Premium menu grid styles */
+    .menu-controls {
+      display:flex;
+      gap:13px;
+      flex-wrap:wrap;
+      justify-content:center;
+      margin: 10px 0 28px;
+    }
+    .chip {
+      padding: 10px 18px;
+      border-radius: 22px;
+      border:1.7px solid #ebc934;
+      background:#fff;
+      color: #101820;
+      font-weight: 600;
+      cursor:pointer;
+      font-size: 1.06em;
+      transition: background 0.13s, color 0.13s;
+    }
+    .chip.active, .chip:hover {
+      background:#101820;
+      color:#ebc934;
+      border-color:#101820;
+    }
+    .menu-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+      gap: 22px;
+      margin-top: 18px;
+    }
+    .card.menu-item {
+      border: 1.7px solid #ebc9342b;
+      box-shadow: 0 4px 10px #ebc93417;
+      transition: box-shadow 0.17s;
+      min-height: 162px;
+      position: relative;
+    }
+    .card.menu-item:hover {
+      box-shadow: 0 6px 22px #ebc93429, 0 2px 8px #1018200a;
+      border-color: #ebc934bb;
+    }
+    .menu-item h4 {
+      margin: 8px 0 6px;
+      color: #101820;
+      font-size: 1.28em;
+      letter-spacing: .6px;
+      font-weight: 700;
+      text-shadow: 0 1px 8px #ebc9340e;
+    }
+    .price {
+      font-weight:700;
+      color:#ebc934;
+      font-size: 1.08em;
+    }
+    .menu-item .meta {
+      color:#6b6b6b;
+      font-size: 1em;
+      margin-bottom: 5px;
+      font-style: italic;
+    }
+
+    /* About & contact premium styles */
+    .about-card, .contact-card {
+      box-shadow: 0 2px 22px #ebc93416;
+      background: #fffde7;
+      border: 1.4px solid #ebc93436;
+    }
+
+    /* Footer premium styles */
+    footer.card {
+      background:#1a1c20;
+      color:#ebc934;
+      text-align:center;
+      font-size: 1.05em;
+      padding: 1.3em 0;
+      margin-top: 8px;
+      border-radius: 0 0 28px 28px;
+      box-shadow: 0 -2px 8px #ebc93418;
+    }
+    @media (max-width: 700px) {
+      nav { flex-direction: column; align-items: flex-start; padding-left: 9px;}
+      .cart-area { margin-right: 9px; }
+      .nav-main { margin-left: 9px;}
+      .menu-grid { grid-template-columns: repeat(auto-fill, minmax(90vw, 1fr)); }
+      section { padding: 1.5em 2vw; }
+    }
   </style>
 </head>
 <body>
   <nav>
-    <a href="Cart and checkout.html">🛒 Cart</a> &nbsp;&nbsp;&nbsp;|
-    <a href="#home">Home</a> |
-    <a href="#menu">Menu</a> |
-    <a href="#about">About</a> |
-    <a href="#contact">Contact</a>
+    <div class="nav-main">
+      <a href="#home">Home</a>
+      <a href="#menu">Menu</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="cart-area">
+      <a href="Cart and checkout.html"><button class="cart-btn">Cart</button></a>
+    </div>
   </nav>
 
   <section class="hero" id="home">
@@ -94,33 +314,33 @@
 
   <section id="about">
     <h2>About Us</h2>
-    <p class="card">At Litterateur Cafe, we believe food is an art. Every dish we prepare is a masterpiece, combining traditional recipes with modern innovation. We source only the finest ingredients to ensure every meal is memorable.</p>
+    <p class="card about-card">At Litterateur Cafe, we believe food is an art. Every dish we prepare is a masterpiece, combining traditional recipes with modern innovation. We source only the finest ingredients to ensure every meal is memorable.</p>
   </section>
 
   <section id="contact">
     <h2>Contact Us</h2>
-    <div class="card">
+    <div class="card contact-card">
       <p><strong>Phone:</strong> +91-9876543210</p>
       <p><strong>Email:</strong> hello@litterateurcafe.com</p>
       <p><strong>Address:</strong> 123, Food Street, Gourmet City</p>
     </div>
   </section>
 
-  <footer class="card" style="background:#323232;color:#ebc934; text-align:center">
+  <footer class="card" style="background:#1a1c20; color:#ebc934; text-align:center">
     © 2025 Litterateur Cafe. All rights reserved.
   </footer>
 
   <script>
-    // Simple filter logic
-    const chips = document.addEventListener('click', (e)=>{
+    // Premium menu filter logic
+    document.addEventListener('click', (e) => {
       const btn = e.target.closest('.chip');
-      if(!btn) return;
-      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      if (!btn) return;
+      document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
       btn.classList.add('active');
       const cat = btn.dataset.filter;
-      document.querySelectorAll('.menu-item').forEach(it=>{
+      document.querySelectorAll('.menu-item').forEach(it => {
         const cats = it.dataset.cat.split(' ');
-        it.style.display = (cat==='all' || cats.includes(cat)) ? '' : 'none';
+        it.style.display = (cat === 'all' || cats.includes(cat)) ? '' : 'none';
       });
     });
   </script>
