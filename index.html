@@ -3,43 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Netlify</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .container {
-            text-align: center;
-            color: white;
-            padding: 2rem;
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
-        .logo {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-        }
-    </style>
+    <title>Litterateur Cafe - Home</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="logo">🚀</div>
-        <h1>Welcome to Netlify</h1>
-        <p>Your site is live and ready to go!</p>
-        <p>Edit your index.html to get started.</p>
-    </div>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>Litterateur Cafe</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">Home</a></li>
+                <li><a href="Menu page.html" class="nav-link">Menu</a></li>
+                <li><a href="Token rewards page.html" class="nav-link">Rewards</a></li>
+                <li><a href="Cart and checkout.html" class="nav-link">Cart</a></li>
+                <li><a href="login page.html" class="nav-link">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Welcome to Litterateur Cafe</h1>
+            <p class="hero-subtitle">Where Literature Meets Great Coffee</p>
+            <p class="hero-description">Experience the perfect blend of artisan coffee, delicious pastries, and a cozy literary atmosphere. Your favorite books and beverages await.</p>
+            <div class="hero-buttons">
+                <a href="Menu page.html" class="btn btn-primary">Explore Menu</a>
+                <a href="Token rewards page.html" class="btn btn-secondary">Join Rewards</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="features-container">
+            <div class="feature-card">
+                <h3>📚 Reading Nook</h3>
+                <p>Cozy corners with curated book collections for your reading pleasure</p>
+            </div>
+            <div class="feature-card">
+                <h3>☕ Artisan Coffee</h3>
+                <p>Premium coffee beans roasted to perfection, served by expert baristas</p>
+            </div>
+            <div class="feature-card">
+                <h3>🍰 Fresh Pastries</h3>
+                <p>Homemade treats and pastries baked daily with love and care</p>
+            </div>
+            <div class="feature-card">
+                <h3>🎁 Rewards Program</h3>
+                <p>Earn tokens with every purchase and unlock exclusive benefits</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="about-container">
+            <h2>About Litterateur Cafe</h2>
+            <p>Founded with a passion for literature and coffee, Litterateur Cafe is more than just a coffee shop - it's a community hub for book lovers, writers, and coffee enthusiasts. We believe that great conversations start with great coffee and good books.</p>
+            <p>Visit us today and discover your new favorite spot to read, write, or simply relax with a cup of our finest brew.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Litterateur Cafe</h3>
+                <p>Your literary coffee destination</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="Menu page.html">Menu</a></li>
+                    <li><a href="Token rewards page.html">Rewards</a></li>
+                    <li><a href="login page.html">Account</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: info@litterateurcafe.com</p>
+                <p>Phone: (555) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Litterateur Cafe. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
