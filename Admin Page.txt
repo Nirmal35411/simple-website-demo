@@ -1,0 +1,872 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0F1419;
+            color: #E2E8F0;
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
+        .dashboard-container {
+            display: flex;
+            height: 100%;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #1A202C 0%, #2D3748 100%);
+            border-right: 1px solid #4A5568;
+            position: fixed;
+            height: 100%;
+            left: 0;
+            top: 0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 32px 24px;
+            border-bottom: 1px solid #4A5568;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: #F7FAFC;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        .sidebar-subtitle {
+            font-size: 12px;
+            color: #A0AEC0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .nav-menu {
+            padding: 24px 0;
+        }
+        
+        .nav-item {
+            margin-bottom: 4px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 24px;
+            color: #CBD5E0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            font-weight: 500;
+        }
+        
+        .nav-link:hover {
+            background: rgba(102, 126, 234, 0.1);
+            color: #F7FAFC;
+            border-left-color: #667EEA;
+        }
+        
+        .nav-link.active {
+            background: rgba(102, 126, 234, 0.2);
+            color: #F7FAFC;
+            border-left-color: #667EEA;
+        }
+        
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            background: #0F1419;
+            min-height: 100vh;
+        }
+        
+        .main-header {
+            background: #1A202C;
+            border-bottom: 1px solid #4A5568;
+            padding: 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #F7FAFC;
+            margin-bottom: 4px;
+        }
+        
+        .header-subtitle {
+            color: #A0AEC0;
+            font-size: 14px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        .notification-btn {
+            position: relative;
+            background: #2D3748;
+            border: 1px solid #4A5568;
+            color: #CBD5E0;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .notification-btn:hover {
+            background: #4A5568;
+            color: #F7FAFC;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background: #F56565;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: #2D3748;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .user-profile:hover {
+            background: #4A5568;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #F7FAFC;
+        }
+        
+        .user-role {
+            font-size: 12px;
+            color: #A0AEC0;
+        }
+        
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 32px;
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #1A202C 0%, #2D3748 100%);
+            border: 1px solid #4A5568;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667EEA 0%, #764BA2 100%);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+        
+        .stat-title {
+            font-size: 14px;
+            color: #A0AEC0;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .stat-icon.orders {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667EEA;
+        }
+        
+        .stat-icon.revenue {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48BB78;
+        }
+        
+        .stat-icon.active {
+            background: rgba(237, 137, 54, 0.2);
+            color: #ED8936;
+        }
+        
+        .stat-icon.pending {
+            background: rgba(245, 101, 101, 0.2);
+            color: #F56565;
+        }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #F7FAFC;
+            margin-bottom: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .stat-change.positive {
+            color: #48BB78;
+        }
+        
+        .stat-change.negative {
+            color: #F56565;
+        }
+        
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        
+        /* Live Orders Feed */
+        .live-orders {
+            background: linear-gradient(135deg, #1A202C 0%, #2D3748 100%);
+            border: 1px solid #4A5568;
+            border-radius: 16px;
+            padding: 24px;
+            height: fit-content;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #4A5568;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #F7FAFC;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #48BB78;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .orders-feed {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .order-item {
+            background: #2D3748;
+            border: 1px solid #4A5568;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .order-item:hover {
+            background: #4A5568;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .order-id {
+            font-weight: 600;
+            color: #F7FAFC;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .order-status {
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .order-status.new {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667EEA;
+        }
+        
+        .order-status.preparing {
+            background: rgba(237, 137, 54, 0.2);
+            color: #ED8936;
+        }
+        
+        .order-status.ready {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48BB78;
+        }
+        
+        .order-details {
+            color: #CBD5E0;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .order-time {
+            color: #A0AEC0;
+            font-size: 12px;
+        }
+        
+        /* Quick Actions */
+        .quick-actions {
+            background: linear-gradient(135deg, #1A202C 0%, #2D3748 100%);
+            border: 1px solid #4A5568;
+            border-radius: 16px;
+            padding: 24px;
+        }
+        
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .action-btn {
+            background: #2D3748;
+            border: 1px solid #4A5568;
+            color: #CBD5E0;
+            padding: 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .action-btn:hover {
+            background: #4A5568;
+            color: #F7FAFC;
+            transform: translateY(-2px);
+        }
+        
+        .action-icon {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+        
+        .action-text {
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Analytics Charts */
+        .analytics-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+        
+        .chart-container {
+            background: linear-gradient(135deg, #1A202C 0%, #2D3748 100%);
+            border: 1px solid #4A5568;
+            border-radius: 16px;
+            padding: 24px;
+            height: 400px;
+        }
+        
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            background: #2D3748;
+            border: 2px dashed #4A5568;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #A0AEC0;
+            text-align: center;
+        }
+        
+        .chart-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+        
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .chart-description {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        .charts-grid {
+            display: grid;
+            gap: 24px;
+        }
+        
+        .small-chart {
+            height: 180px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .analytics-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Focus States for Accessibility */
+        .nav-link:focus,
+        .notification-btn:focus,
+        .user-profile:focus,
+        .action-btn:focus {
+            outline: 2px solid #667EEA;
+            outline-offset: 2px;
+        }
+        
+        /* Screen Reader Only Content */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+        
+        /* Scrollbar Styling */
+        .orders-feed::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .orders-feed::-webkit-scrollbar-track {
+            background: #2D3748;
+            border-radius: 3px;
+        }
+        
+        .orders-feed::-webkit-scrollbar-thumb {
+            background: #4A5568;
+            border-radius: 3px;
+        }
+        
+        .orders-feed::-webkit-scrollbar-thumb:hover {
+            background: #718096;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="dashboard-container"><!-- Sidebar Navigation -->
+   <nav class="sidebar" role="navigation" aria-label="Main navigation">
+    <div class="sidebar-header">
+     <div class="logo">
+      <div class="logo-icon">
+       🏪
+      </div><span id="dashboard-title">Admin Dashboard</span>
+     </div>
+     <div class="sidebar-subtitle">
+      Management Portal
+     </div>
+    </div>
+    <ul class="nav-menu" role="menubar">
+     <li class="nav-item" role="none"><a href="#" class="nav-link active" role="menuitem" onclick="navigateTo('dashboard')"> <span class="nav-icon">🏠</span> Dashboard Home </a></li>
+     <li class="nav-item" role="none"><a href="#" class="nav-link" role="menuitem" onclick="navigateTo('orders')"> <span class="nav-icon">📦</span> Orders </a></li>
+     <li class="nav-item" role="none"><a href="#" class="nav-link" role="menuitem" onclick="navigateTo('menu')"> <span class="nav-icon">🍽️</span> Menu Management </a></li>
+     <li class="nav-item" role="none"><a href="#" class="nav-link" role="menuitem" onclick="navigateTo('users')"> <span class="nav-icon">👥</span> Users </a></li>
+     <li class="nav-item" role="none"><a href="#" class="nav-link" role="menuitem" onclick="navigateTo('delivery')"> <span class="nav-icon">🚚</span> Delivery Partners </a></li>
+     <li class="nav-item" role="none"><a href="#" class="nav-link" role="menuitem" onclick="navigateTo('analytics')"> <span class="nav-icon">📊</span> Analytics </a></li>
+     <li class="nav-item" role="none"><a href="#" class="nav-link" role="menuitem" onclick="navigateTo('settings')"> <span class="nav-icon">⚙️</span> Settings </a></li>
+    </ul>
+   </nav><!-- Main Content -->
+   <main class="main-content"><!-- Header -->
+    <header class="main-header">
+     <div class="header-info">
+      <h1 class="header-title">Dashboard Overview</h1>
+      <p class="header-subtitle" id="welcome-message">Welcome back, Admin</p>
+     </div>
+     <div class="header-actions"><button class="notification-btn" onclick="toggleNotifications()" aria-label="Notifications"> 🔔 <span class="notification-badge" aria-label="3 unread notifications">3</span> </button>
+      <div class="user-profile" onclick="toggleUserMenu()" tabindex="0" role="button" aria-label="User menu">
+       <div class="user-avatar">
+        A
+       </div>
+       <div class="user-info">
+        <div class="user-name">
+         Admin User
+        </div>
+        <div class="user-role">
+         Administrator
+        </div>
+       </div>
+      </div>
+     </div>
+    </header><!-- Dashboard Content -->
+    <div class="dashboard-content"><!-- Stats Cards -->
+     <section class="stats-grid" aria-label="Dashboard statistics">
+      <div class="stat-card">
+       <div class="stat-header">
+        <div class="stat-title" id="orders-today-label">
+         Total Orders Today
+        </div>
+        <div class="stat-icon orders">
+         📦
+        </div>
+       </div>
+       <div class="stat-value" id="orders-count">
+        247
+       </div>
+       <div class="stat-change positive">
+        ↗️ +12% from yesterday
+       </div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-header">
+        <div class="stat-title" id="revenue-today-label">
+         Revenue Today
+        </div>
+        <div class="stat-icon revenue">
+         💰
+        </div>
+       </div>
+       <div class="stat-value" id="revenue-amount">
+        ₹18,450
+       </div>
+       <div class="stat-change positive">
+        ↗️ +8% from yesterday
+       </div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-header">
+        <div class="stat-title" id="active-orders-label">
+         Active Orders
+        </div>
+        <div class="stat-icon active">
+         🔥
+        </div>
+       </div>
+       <div class="stat-value" id="active-count">
+        34
+       </div>
+       <div class="stat-change positive">
+        ↗️ +5 new orders
+       </div>
+      </div>
+      <div class="stat-card">
+       <div class="stat-header">
+        <div class="stat-title" id="pending-orders-label">
+         Pending Orders
+        </div>
+        <div class="stat-icon pending">
+         ⏳
+        </div>
+       </div>
+       <div class="stat-value" id="pending-count">
+        12
+       </div>
+       <div class="stat-change negative">
+        ↘️ -3 from last hour
+       </div>
+      </div>
+     </section><!-- Content Grid -->
+     <div class="content-grid"><!-- Quick Actions -->
+      <section class="quick-actions" aria-labelledby="quick-actions-title">
+       <div class="section-header">
+        <h2 class="section-title" id="quick-actions-title">Quick Actions</h2>
+       </div>
+       <div class="actions-grid"><button class="action-btn" onclick="quickAction('add-order')" aria-label="Add new order">
+         <div class="action-icon">
+          ➕
+         </div>
+         <div class="action-text">
+          Add New Order
+         </div></button> <button class="action-btn" onclick="quickAction('export')" aria-label="Export data">
+         <div class="action-icon">
+          📊
+         </div>
+         <div class="action-text">
+          Export Data
+         </div></button> <button class="action-btn" onclick="quickAction('notify')" aria-label="Send notifications">
+         <div class="action-icon">
+          📢
+         </div>
+         <div class="action-text">
+          Send Notifications
+         </div></button> <button class="action-btn" onclick="quickAction('inventory')" aria-label="Manage inventory">
+         <div class="action-icon">
+          📋
+         </div>
+         <div class="action-text">
+          Manage Inventory
+         </div></button>
+       </div>
+      </section><!-- Live Orders Feed -->
+      <section class="live-orders" aria-labelledby="live-orders-title">
+       <div class="section-header">
+        <h2 class="section-title" id="live-orders-title"><span class="live-indicator" aria-hidden="true"></span> Live Orders Feed</h2>
+       </div>
+       <div class="orders-feed" id="orders-feed" role="log" aria-live="polite" aria-label="Live orders updates">
+        <div class="order-item">
+         <div class="order-header"><span class="order-id">#ORD-2024-156</span> <span class="order-status new">New</span>
+         </div>
+         <div class="order-details">
+          Coffee Blend × 2, Croissant × 1 - ₹598
+         </div>
+         <div class="order-time">
+          2 minutes ago
+         </div>
+        </div>
+        <div class="order-item">
+         <div class="order-header"><span class="order-id">#ORD-2024-155</span> <span class="order-status preparing">Preparing</span>
+         </div>
+         <div class="order-details">
+          Chocolate Cake × 1, Latte × 2 - ₹456
+         </div>
+         <div class="order-time">
+          5 minutes ago
+         </div>
+        </div>
+        <div class="order-item">
+         <div class="order-header"><span class="order-id">#ORD-2024-154</span> <span class="order-status ready">Ready</span>
+         </div>
+         <div class="order-details">
+          Sandwich × 1, Juice × 1 - ₹299
+         </div>
+         <div class="order-time">
+          8 minutes ago
+         </div>
+        </div>
+        <div class="order-item">
+         <div class="order-header"><span class="order-id">#ORD-2024-153</span> <span class="order-status new">New</span>
+         </div>
+         <div class="order-details">
+          Espresso × 3, Muffin × 2 - ₹445
+         </div>
+         <div class="order-time">
+          12 minutes ago
+         </div>
+        </div>
+       </div>
+      </section>
+     </div><!-- Analytics Section -->
+     <section class="analytics-section" aria-labelledby="analytics-title">
+      <div class="chart-container">
+       <div class="section-header">
+        <h2 class="section-title" id="analytics-title">Analytics Overview</h2>
+       </div>
+       <div class="chart-placeholder">
+        <div class="chart-icon">
+         📈
+        </div>
+        <div class="chart-title">
+         Revenue Trend
+        </div>
+        <div class="chart-description">
+         Line chart showing daily revenue over time
+        </div>
+       </div>
+      </div>
+      <div class="charts-grid">
+       <div class="chart-container small-chart">
+        <div class="chart-placeholder">
+         <div class="chart-icon">
+          📊
+         </div>
+         <div class="chart-title">
+          Order Volume
+         </div>
+         <div class="chart-description">
+          Bar chart of hourly orders
+         </div>
+        </div>
+       </div>
+       <div class="chart-container small-chart">
+        <div class="chart-placeholder">
+         <div class="chart-icon">
+          🥧
+         </div>
+         <div class="chart-title">
+          Popular Items
+         </div>
+         <div class="chart-description">
+          Pie chart of top menu items
+         </div>
+        </div>
+       </div>
+      </div>
+     </section>
+    </div>
+   </main>
+  </div><!-- Audio for notifications -->
+  <audio id="notification-sound" preload="auto">
+  </audio>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9967b10c13adc51e',t:'MTc2MTc5MzUzMy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

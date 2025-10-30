@@ -1,0 +1,1196 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2D3436;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+            height: 100%;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        /* Header */
+        .dashboard-header {
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: #F8F9FA;
+            padding: 32px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 30px rgba(27, 67, 50, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .header-content {
+            flex: 1;
+        }
+        
+        .dashboard-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 8px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .welcome-message {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+        
+        .user-name {
+            font-size: 24px;
+            font-weight: 600;
+            color: #D4AF37;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+        
+        .edit-profile-btn {
+            background: #D4AF37;
+            color: #1B4332;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .edit-profile-btn:hover {
+            background: #F4D03F;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .logout-link {
+            color: #F8F9FA;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .logout-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 1;
+        }
+        
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .dashboard-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-section:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #F8F9FA;
+        }
+        
+        .section-icon {
+            font-size: 28px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1B4332;
+            flex: 1;
+        }
+        
+        /* Orders Section */
+        .order-item {
+            background: #F8F9FA;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .order-item:hover {
+            background: #E9ECEF;
+            transform: translateX(4px);
+        }
+        
+        .order-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        
+        .order-id {
+            font-weight: 600;
+            color: #1B4332;
+            font-size: 16px;
+        }
+        
+        .order-date {
+            color: #6C757D;
+            font-size: 14px;
+        }
+        
+        .order-amount {
+            font-weight: 700;
+            color: #D4AF37;
+            font-size: 18px;
+        }
+        
+        .order-items {
+            color: #6C757D;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: 12px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #E9ECEF;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #27AE60 0%, #2ECC71 100%);
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #6C757D;
+        }
+        
+        .progress-step {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .progress-step.active {
+            color: #27AE60;
+            font-weight: 600;
+        }
+        
+        .progress-step.completed {
+            color: #27AE60;
+        }
+        
+        /* Referrals Section */
+        .referral-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #F8F9FA;
+        }
+        
+        .referral-item:last-child {
+            border-bottom: none;
+        }
+        
+        .referral-info {
+            flex: 1;
+        }
+        
+        .referral-name {
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 4px;
+        }
+        
+        .referral-date {
+            color: #6C757D;
+            font-size: 14px;
+        }
+        
+        .referral-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .referral-status.completed {
+            background: #D1F2EB;
+            color: #27AE60;
+        }
+        
+        .referral-status.pending {
+            background: #FFF3CD;
+            color: #856404;
+        }
+        
+        .referral-reward {
+            font-weight: 700;
+            color: #D4AF37;
+            margin-left: 12px;
+        }
+        
+        /* Token Section */
+        .token-balance {
+            text-align: center;
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .token-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 8px;
+        }
+        
+        .token-label {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .token-history {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .token-transaction {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #F8F9FA;
+        }
+        
+        .token-transaction:last-child {
+            border-bottom: none;
+        }
+        
+        .transaction-info {
+            flex: 1;
+        }
+        
+        .transaction-type {
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 4px;
+        }
+        
+        .transaction-date {
+            color: #6C757D;
+            font-size: 14px;
+        }
+        
+        .transaction-amount {
+            font-weight: 700;
+        }
+        
+        .transaction-amount.positive {
+            color: #27AE60;
+        }
+        
+        .transaction-amount.negative {
+            color: #E74C3C;
+        }
+        
+        /* Addresses Section */
+        .address-item {
+            background: #F8F9FA;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .address-item:hover {
+            background: #E9ECEF;
+        }
+        
+        .address-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .address-type {
+            display: inline-block;
+            background: #D4AF37;
+            color: #1B4332;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        
+        .address-text {
+            color: #1B4332;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+        
+        .address-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+        
+        .address-btn {
+            background: none;
+            border: 1px solid #CED4DA;
+            color: #6C757D;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .address-btn:hover {
+            border-color: #D4AF37;
+            color: #D4AF37;
+        }
+        
+        .add-address-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+            color: #1B4332;
+            border: none;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .add-address-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Settings Section */
+        .settings-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #F8F9FA;
+        }
+        
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+        
+        .settings-info {
+            flex: 1;
+        }
+        
+        .settings-label {
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 4px;
+        }
+        
+        .settings-description {
+            color: #6C757D;
+            font-size: 14px;
+        }
+        
+        .settings-toggle {
+            width: 48px;
+            height: 24px;
+            background: #CED4DA;
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .settings-toggle.active {
+            background: #D4AF37;
+        }
+        
+        .settings-toggle::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .settings-toggle.active::after {
+            transform: translateX(24px);
+        }
+        
+        /* Success Messages */
+        .success-message {
+            background: #D1F2EB;
+            color: #27AE60;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+            animation: slide-down 0.3s ease-out;
+        }
+        
+        @keyframes slide-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .dashboard-section {
+                padding: 24px;
+            }
+            
+            .dashboard-title {
+                font-size: 28px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .token-amount {
+                font-size: 36px;
+            }
+            
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .progress-steps {
+                font-size: 10px;
+            }
+        }
+        
+        /* Focus States for Accessibility */
+        .edit-profile-btn:focus,
+        .logout-link:focus,
+        .address-btn:focus,
+        .add-address-btn:focus,
+        .settings-toggle:focus {
+            outline: 2px solid #D4AF37;
+            outline-offset: 2px;
+        }
+        
+        /* Screen Reader Only Content */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container"><!-- Dashboard Header -->
+   <header class="dashboard-header">
+    <div class="header-content">
+     <h1 class="dashboard-title" id="dashboard-title">My Dashboard</h1>
+     <p class="welcome-message" id="welcome-message">Welcome back,</p>
+     <p class="user-name">Sarah Johnson</p>
+    </div>
+    <div class="header-actions"><button class="edit-profile-btn" id="edit-profile-btn" onclick="editProfile()"> ✏️ <span id="edit-profile-text">Edit Profile</span> </button> <a href="#" class="logout-link" id="logout-link" onclick="logout(event)"> <span id="logout-text">Logout</span> 🚪 </a>
+    </div>
+   </header><!-- Success Message -->
+   <div class="success-message" id="success-message" role="alert" aria-live="polite"></div><!-- Dashboard Grid -->
+   <main class="dashboard-grid"><!-- My Orders Section -->
+    <section class="dashboard-section" aria-labelledby="orders-title">
+     <div class="section-header">
+      <div class="section-icon" aria-hidden="true">
+       📦
+      </div>
+      <h2 class="section-title" id="orders-title">My Orders</h2>
+     </div>
+     <div class="order-item">
+      <div class="order-header">
+       <div>
+        <div class="order-id">
+         #ORD-2024-001
+        </div>
+        <div class="order-date">
+         March 15, 2024
+        </div>
+       </div>
+       <div class="order-amount">
+        ₹784
+       </div>
+      </div>
+      <div class="order-items">
+       Artisan Coffee Blend × 2, French Croissant × 1
+      </div>
+      <div class="progress-container">
+       <div class="progress-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-label="Order progress">
+        <div class="progress-fill" style="width: 75%"></div>
+       </div>
+       <div class="progress-steps"><span class="progress-step completed">✓ Confirmed</span> <span class="progress-step completed">✓ Preparing</span> <span class="progress-step active">🚚 Out for Delivery</span> <span class="progress-step">📍 Delivered</span>
+       </div>
+      </div>
+     </div>
+     <div class="order-item">
+      <div class="order-header">
+       <div>
+        <div class="order-id">
+         #ORD-2024-002
+        </div>
+        <div class="order-date">
+         March 12, 2024
+        </div>
+       </div>
+       <div class="order-amount">
+        ₹456
+       </div>
+      </div>
+      <div class="order-items">
+       Chocolate Cake Slice × 1, Cappuccino × 2
+      </div>
+      <div class="progress-container">
+       <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" aria-label="Order completed">
+        <div class="progress-fill" style="width: 100%"></div>
+       </div>
+       <div class="progress-steps"><span class="progress-step completed">✓ Confirmed</span> <span class="progress-step completed">✓ Preparing</span> <span class="progress-step completed">✓ Out for Delivery</span> <span class="progress-step completed">✓ Delivered</span>
+       </div>
+      </div>
+     </div>
+     <div class="order-item">
+      <div class="order-header">
+       <div>
+        <div class="order-id">
+         #ORD-2024-003
+        </div>
+        <div class="order-date">
+         March 10, 2024
+        </div>
+       </div>
+       <div class="order-amount">
+        ₹299
+       </div>
+      </div>
+      <div class="order-items">
+       Espresso × 1, Blueberry Muffin × 1
+      </div>
+      <div class="progress-container">
+       <div class="progress-bar" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" aria-label="Order being prepared">
+        <div class="progress-fill" style="width: 50%"></div>
+       </div>
+       <div class="progress-steps"><span class="progress-step completed">✓ Confirmed</span> <span class="progress-step active">👨‍🍳 Preparing</span> <span class="progress-step">🚚 Out for Delivery</span> <span class="progress-step">📍 Delivered</span>
+       </div>
+      </div>
+     </div>
+    </section><!-- My Referrals Section -->
+    <section class="dashboard-section" aria-labelledby="referrals-title">
+     <div class="section-header">
+      <div class="section-icon" aria-hidden="true">
+       👥
+      </div>
+      <h2 class="section-title" id="referrals-title">My Referrals</h2>
+     </div>
+     <div class="referral-item">
+      <div class="referral-info">
+       <div class="referral-name">
+        Alex Chen
+       </div>
+       <div class="referral-date">
+        Joined March 14, 2024
+       </div>
+      </div>
+      <div class="referral-status completed">
+       Completed
+      </div>
+      <div class="referral-reward">
+       +₹50
+      </div>
+     </div>
+     <div class="referral-item">
+      <div class="referral-info">
+       <div class="referral-name">
+        Maria Rodriguez
+       </div>
+       <div class="referral-date">
+        Joined March 10, 2024
+       </div>
+      </div>
+      <div class="referral-status completed">
+       Completed
+      </div>
+      <div class="referral-reward">
+       +₹50
+      </div>
+     </div>
+     <div class="referral-item">
+      <div class="referral-info">
+       <div class="referral-name">
+        John Smith
+       </div>
+       <div class="referral-date">
+        Joined March 8, 2024
+       </div>
+      </div>
+      <div class="referral-status pending">
+       Pending
+      </div>
+      <div class="referral-reward">
+       ₹50
+      </div>
+     </div>
+     <div class="referral-item">
+      <div class="referral-info">
+       <div class="referral-name">
+        Emma Wilson
+       </div>
+       <div class="referral-date">
+        Joined March 5, 2024
+       </div>
+      </div>
+      <div class="referral-status completed">
+       Completed
+      </div>
+      <div class="referral-reward">
+       +₹50
+      </div>
+     </div>
+    </section><!-- Token Balance & History Section -->
+    <section class="dashboard-section" aria-labelledby="tokens-title">
+     <div class="section-header">
+      <div class="section-icon" aria-hidden="true">
+       🪙
+      </div>
+      <h2 class="section-title" id="tokens-title">Token Balance &amp; History</h2>
+     </div>
+     <div class="token-balance">
+      <div class="token-amount" aria-label="Current token balance">
+       1,250
+      </div>
+      <div class="token-label">
+       Available Tokens
+      </div>
+     </div>
+     <div class="token-history">
+      <div class="token-transaction">
+       <div class="transaction-info">
+        <div class="transaction-type">
+         Referral Bonus
+        </div>
+        <div class="transaction-date">
+         March 14, 2024
+        </div>
+       </div>
+       <div class="transaction-amount positive">
+        +50
+       </div>
+      </div>
+      <div class="token-transaction">
+       <div class="transaction-info">
+        <div class="transaction-type">
+         Order Discount
+        </div>
+        <div class="transaction-date">
+         March 12, 2024
+        </div>
+       </div>
+       <div class="transaction-amount negative">
+        -25
+       </div>
+      </div>
+      <div class="token-transaction">
+       <div class="transaction-info">
+        <div class="transaction-type">
+         Welcome Bonus
+        </div>
+        <div class="transaction-date">
+         March 10, 2024
+        </div>
+       </div>
+       <div class="transaction-amount positive">
+        +100
+       </div>
+      </div>
+      <div class="token-transaction">
+       <div class="transaction-info">
+        <div class="transaction-type">
+         Purchase Reward
+        </div>
+        <div class="transaction-date">
+         March 8, 2024
+        </div>
+       </div>
+       <div class="transaction-amount positive">
+        +15
+       </div>
+      </div>
+      <div class="token-transaction">
+       <div class="transaction-info">
+        <div class="transaction-type">
+         Referral Bonus
+        </div>
+        <div class="transaction-date">
+         March 5, 2024
+        </div>
+       </div>
+       <div class="transaction-amount positive">
+        +50
+       </div>
+      </div>
+     </div>
+    </section><!-- Saved Addresses Section -->
+    <section class="dashboard-section" aria-labelledby="addresses-title">
+     <div class="section-header">
+      <div class="section-icon" aria-hidden="true">
+       📍
+      </div>
+      <h2 class="section-title" id="addresses-title">Saved Addresses</h2>
+     </div>
+     <div class="address-item">
+      <div class="address-type">
+       Home
+      </div>
+      <div class="address-text">
+       123 MG Road, Apartment 4B<br>
+        Bangalore, Karnataka 560001<br>
+        Phone: +91 98765 43210
+      </div>
+      <div class="address-actions"><button class="address-btn" onclick="editAddress(0)">Edit</button> <button class="address-btn" onclick="deleteAddress(0)">Delete</button>
+      </div>
+     </div>
+     <div class="address-item">
+      <div class="address-type">
+       Office
+      </div>
+      <div class="address-text">
+       456 Brigade Road, Floor 3<br>
+        Bangalore, Karnataka 560025<br>
+        Phone: +91 98765 43210
+      </div>
+      <div class="address-actions"><button class="address-btn" onclick="editAddress(1)">Edit</button> <button class="address-btn" onclick="deleteAddress(1)">Delete</button>
+      </div>
+     </div><button class="add-address-btn" onclick="addAddress()"> ➕ Add New Address </button>
+    </section><!-- Account Settings Section -->
+    <section class="dashboard-section" aria-labelledby="settings-title">
+     <div class="section-header">
+      <div class="section-icon" aria-hidden="true">
+       ⚙️
+      </div>
+      <h2 class="section-title" id="settings-title">Account Settings</h2>
+     </div>
+     <div class="settings-item">
+      <div class="settings-info">
+       <div class="settings-label">
+        Email Notifications
+       </div>
+       <div class="settings-description">
+        Receive order updates via email
+       </div>
+      </div>
+      <div class="settings-toggle active" onclick="toggleSetting(this)" role="switch" aria-checked="true" aria-label="Email notifications" tabindex="0"></div>
+     </div>
+     <div class="settings-item">
+      <div class="settings-info">
+       <div class="settings-label">
+        SMS Notifications
+       </div>
+       <div class="settings-description">
+        Receive delivery updates via SMS
+       </div>
+      </div>
+      <div class="settings-toggle active" onclick="toggleSetting(this)" role="switch" aria-checked="true" aria-label="SMS notifications" tabindex="0"></div>
+     </div>
+     <div class="settings-item">
+      <div class="settings-info">
+       <div class="settings-label">
+        Push Notifications
+       </div>
+       <div class="settings-description">
+        Receive app notifications
+       </div>
+      </div>
+      <div class="settings-toggle" onclick="toggleSetting(this)" role="switch" aria-checked="false" aria-label="Push notifications" tabindex="0"></div>
+     </div>
+     <div class="settings-item">
+      <div class="settings-info">
+       <div class="settings-label">
+        Marketing Emails
+       </div>
+       <div class="settings-description">
+        Receive promotional offers and updates
+       </div>
+      </div>
+      <div class="settings-toggle" onclick="toggleSetting(this)" role="switch" aria-checked="false" aria-label="Marketing emails" tabindex="0"></div>
+     </div>
+     <div class="settings-item">
+      <div class="settings-info">
+       <div class="settings-label">
+        Two-Factor Authentication
+       </div>
+       <div class="settings-description">
+        Add extra security to your account
+       </div>
+      </div>
+      <div class="settings-toggle" onclick="toggleSetting(this)" role="switch" aria-checked="false" aria-label="Two-factor authentication" tabindex="0"></div>
+     </div>
+    </section>
+   </main>
+  </div>
+  <script>
+        // Element SDK Configuration
+        const defaultConfig = {
+            dashboard_title: "My Dashboard",
+            welcome_message: "Welcome back,",
+            orders_section_title: "My Orders",
+            referrals_section_title: "My Referrals",
+            tokens_section_title: "Token Balance & History",
+            addresses_section_title: "Saved Addresses",
+            settings_section_title: "Account Settings",
+            edit_profile_text: "Edit Profile",
+            logout_text: "Logout",
+            background_color: "#F8F9FA",
+            primary_color: "#1B4332",
+            accent_color: "#D4AF37",
+            text_color: "#2D3436",
+            surface_color: "#FFFFFF",
+            font_family: "Playfair Display",
+            font_size: 16
+        };
+
+        // Dashboard Functions
+        function editProfile() {
+            showSuccessMessage("Profile editing feature would open here!");
+        }
+
+        function logout(event) {
+            event.preventDefault();
+            showSuccessMessage("Logout functionality would be implemented here!");
+        }
+
+        function editAddress(index) {
+            showSuccessMessage(`Edit address ${index + 1} functionality would open here!`);
+        }
+
+        function deleteAddress(index) {
+            showSuccessMessage(`Address ${index + 1} would be deleted after confirmation!`);
+        }
+
+        function addAddress() {
+            showSuccessMessage("Add new address form would open here!");
+        }
+
+        function toggleSetting(element) {
+            element.classList.toggle('active');
+            const isActive = element.classList.contains('active');
+            element.setAttribute('aria-checked', isActive);
+            
+            const settingName = element.parentElement.querySelector('.settings-label').textContent;
+            showSuccessMessage(`${settingName} ${isActive ? 'enabled' : 'disabled'}!`);
+        }
+
+        function showSuccessMessage(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                successDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        // Keyboard navigation for toggles
+        document.addEventListener('keydown', function(event) {
+            if (event.target.classList.contains('settings-toggle') && (event.key === 'Enter' || event.key === ' ')) {
+                event.preventDefault();
+                toggleSetting(event.target);
+            }
+        });
+
+        // Element SDK Functions
+        async function onConfigChange(config) {
+            // Update text content
+            const dashboardTitle = document.getElementById('dashboard-title');
+            if (dashboardTitle) dashboardTitle.textContent = config.dashboard_title || defaultConfig.dashboard_title;
+            
+            const welcomeMessage = document.getElementById('welcome-message');
+            if (welcomeMessage) welcomeMessage.textContent = config.welcome_message || defaultConfig.welcome_message;
+            
+            const ordersTitle = document.getElementById('orders-title');
+            if (ordersTitle) ordersTitle.textContent = config.orders_section_title || defaultConfig.orders_section_title;
+            
+            const referralsTitle = document.getElementById('referrals-title');
+            if (referralsTitle) referralsTitle.textContent = config.referrals_section_title || defaultConfig.referrals_section_title;
+            
+            const tokensTitle = document.getElementById('tokens-title');
+            if (tokensTitle) tokensTitle.textContent = config.tokens_section_title || defaultConfig.tokens_section_title;
+            
+            const addressesTitle = document.getElementById('addresses-title');
+            if (addressesTitle) addressesTitle.textContent = config.addresses_section_title || defaultConfig.addresses_section_title;
+            
+            const settingsTitle = document.getElementById('settings-title');
+            if (settingsTitle) settingsTitle.textContent = config.settings_section_title || defaultConfig.settings_section_title;
+            
+            const editProfileText = document.getElementById('edit-profile-text');
+            if (editProfileText) editProfileText.textContent = config.edit_profile_text || defaultConfig.edit_profile_text;
+            
+            const logoutText = document.getElementById('logout-text');
+            if (logoutText) logoutText.textContent = config.logout_text || defaultConfig.logout_text;
+
+            // Update colors
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+
+            document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, #E9ECEF 100%)`;
+            document.body.style.color = textColor;
+
+            // Update primary color elements
+            const header = document.querySelector('.dashboard-header');
+            if (header) header.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+
+            const tokenBalance = document.querySelector('.token-balance');
+            if (tokenBalance) tokenBalance.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+
+            // Update accent color elements
+            const editProfileBtn = document.querySelector('.edit-profile-btn');
+            if (editProfileBtn) editProfileBtn.style.backgroundColor = accentColor;
+
+            const addAddressBtn = document.querySelector('.add-address-btn');
+            if (addAddressBtn) addAddressBtn.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)`;
+
+            const sectionIcons = document.querySelectorAll('.section-icon');
+            sectionIcons.forEach(icon => {
+                icon.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)`;
+            });
+
+            const activeToggles = document.querySelectorAll('.settings-toggle.active');
+            activeToggles.forEach(toggle => {
+                toggle.style.backgroundColor = accentColor;
+            });
+
+            // Update surface color elements
+            const surfaceElements = document.querySelectorAll('.dashboard-section');
+            surfaceElements.forEach(el => {
+                el.style.backgroundColor = surfaceColor;
+            });
+
+            // Update font
+            const customFont = config.font_family || defaultConfig.font_family;
+            const titleElements = document.querySelectorAll('.dashboard-title, .section-title, .token-amount');
+            titleElements.forEach(el => {
+                el.style.fontFamily = `${customFont}, serif`;
+            });
+
+            // Update font size
+            const baseSize = config.font_size || defaultConfig.font_size;
+            document.documentElement.style.fontSize = `${baseSize}px`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.accent_color || defaultConfig.accent_color,
+                        set: (value) => {
+                            config.accent_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["dashboard_title", config.dashboard_title || defaultConfig.dashboard_title],
+                ["welcome_message", config.welcome_message || defaultConfig.welcome_message],
+                ["orders_section_title", config.orders_section_title || defaultConfig.orders_section_title],
+                ["referrals_section_title", config.referrals_section_title || defaultConfig.referrals_section_title],
+                ["tokens_section_title", config.tokens_section_title || defaultConfig.tokens_section_title],
+                ["addresses_section_title", config.addresses_section_title || defaultConfig.addresses_section_title],
+                ["settings_section_title", config.settings_section_title || defaultConfig.settings_section_title],
+                ["edit_profile_text", config.edit_profile_text || defaultConfig.edit_profile_text],
+                ["logout_text", config.logout_text || defaultConfig.logout_text]
+            ]);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange,
+                    mapToCapabilities,
+                    mapToEditPanelValues
+                });
+            }
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9967a63f012159d8',t:'MTc2MTc5MzA5MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

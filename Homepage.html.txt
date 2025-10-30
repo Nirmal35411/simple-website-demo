@@ -1,0 +1,791 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Litterateur Cafe - Luxury Food Delivery</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Dancing+Script:wght@400;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2D3436;
+            background: #F8F9FA;
+            height: 100%;
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Launch Discount Banner */
+        .launch-banner {
+            background: linear-gradient(90deg, #D4AF37 0%, #F4D03F 50%, #D4AF37 100%);
+            color: #1B4332;
+            text-align: center;
+            padding: 16px;
+            font-weight: 700;
+            font-size: 18px;
+            position: relative;
+            overflow: hidden;
+            animation: banner-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes banner-glow {
+            0% { box-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
+            100% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.6); }
+        }
+        
+        .sparkle {
+            position: absolute;
+            color: #1B4332;
+            font-size: 16px;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: #F8F9FA;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="%23D4AF37" opacity="0.1"/></svg>') repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cafe-name {
+            font-family: 'Dancing Script', cursive;
+            font-size: 64px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-tagline {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-style: italic;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 0.95; transform: translateY(0); }
+        }
+        
+        .order-btn {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+            color: #1B4332;
+            border: none;
+            padding: 18px 36px;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .order-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            text-align: center;
+            color: #1B4332;
+            margin-bottom: 48px;
+        }
+        
+        /* Featured Menu */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 48px;
+        }
+        
+        .menu-item {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .menu-image {
+            height: 200px;
+            background: linear-gradient(45deg, #D4AF37, #F4D03F);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1B4332;
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .menu-content {
+            padding: 24px;
+        }
+        
+        .menu-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 8px;
+        }
+        
+        .menu-description {
+            color: #6C757D;
+            margin-bottom: 16px;
+        }
+        
+        .menu-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #D4AF37;
+        }
+        
+        /* How It Works */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 48px;
+        }
+        
+        .step {
+            text-align: center;
+        }
+        
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #D4AF37;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            font-size: 32px;
+            color: #D4AF37;
+            background: white;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+        
+        .step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 12px;
+        }
+        
+        .step-description {
+            color: #6C757D;
+        }
+        
+        /* Rewards Sections */
+        .rewards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+        
+        .reward-card {
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: #F8F9FA;
+            padding: 40px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(27, 67, 50, 0.2);
+        }
+        
+        .reward-icon {
+            font-size: 48px;
+            margin-bottom: 24px;
+            color: #D4AF37;
+        }
+        
+        .reward-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .reward-description {
+            opacity: 0.9;
+            margin-bottom: 24px;
+        }
+        
+        .reward-btn {
+            background: #D4AF37;
+            color: #1B4332;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .reward-btn:hover {
+            background: #F4D03F;
+            transform: translateY(-2px);
+        }
+        
+        /* Reviews */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+        }
+        
+        .review-card {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stars {
+            color: #D4AF37;
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        
+        .review-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #2D3436;
+        }
+        
+        .reviewer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .reviewer-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #1B4332, #D4AF37);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .reviewer-name {
+            font-weight: 600;
+            color: #1B4332;
+        }
+        
+        /* Contact */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+            text-align: center;
+        }
+        
+        .contact-item {
+            background: white;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-icon {
+            font-size: 32px;
+            color: #D4AF37;
+            margin-bottom: 16px;
+        }
+        
+        .contact-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 8px;
+        }
+        
+        .contact-info {
+            color: #6C757D;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .cafe-name {
+                font-size: 48px;
+            }
+            
+            .hero-tagline {
+                font-size: 20px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .menu-grid,
+            .steps-grid,
+            .rewards-grid,
+            .reviews-grid,
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Launch Discount Banner -->
+  <div class="launch-banner"><span id="launch-discount-text">✨ Launch Discount: Get Up to 60% Off! ✨</span>
+   <div class="sparkle" style="left: 10%; top: 20%; animation-delay: 0s;">
+    ✨
+   </div>
+   <div class="sparkle" style="right: 15%; top: 30%; animation-delay: 0.5s;">
+    ⭐
+   </div>
+   <div class="sparkle" style="left: 20%; bottom: 25%; animation-delay: 1s;">
+    ✨
+   </div>
+   <div class="sparkle" style="right: 25%; bottom: 20%; animation-delay: 1.5s;">
+    ⭐
+   </div>
+  </div><!-- Hero Section -->
+  <section class="hero">
+   <div class="container">
+    <div class="hero-content">
+     <h1 class="cafe-name" id="cafe-name">Litterateur Cafe</h1>
+     <p class="hero-tagline" id="hero-tagline">Where Every Bite Tells a Story</p><a href="#menu" class="order-btn" id="order-button-text">Order Now</a>
+    </div>
+   </div>
+  </section><!-- Featured Menu -->
+  <section class="section" id="menu">
+   <div class="container">
+    <h2 class="section-title">Featured Menu</h2>
+    <div class="menu-grid">
+     <div class="menu-item">
+      <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Gourmet Dish</span>
+      </div>
+      <div class="menu-content">
+       <h3 class="menu-title">Truffle Risotto Supreme</h3>
+       <p class="menu-description">Creamy arborio rice with black truffle shavings, aged parmesan, and wild mushrooms</p>
+       <div class="menu-price">
+        $28
+       </div>
+      </div>
+     </div>
+     <div class="menu-item">
+      <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Artisan Coffee</span>
+      </div>
+      <div class="menu-content">
+       <h3 class="menu-title">Literary Blend Coffee</h3>
+       <p class="menu-description">Single-origin Ethiopian beans with notes of chocolate and citrus, perfectly roasted</p>
+       <div class="menu-price">
+        $8
+       </div>
+      </div>
+     </div>
+     <div class="menu-item">
+      <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Signature Dessert</span>
+      </div>
+      <div class="menu-content">
+       <h3 class="menu-title">Poet's Chocolate Soufflé</h3>
+       <p class="menu-description">Warm chocolate soufflé with vanilla bean ice cream and gold leaf garnish</p>
+       <div class="menu-price">
+        $16
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- How It Works -->
+  <section class="section" style="background: white;">
+   <div class="container">
+    <h2 class="section-title">How It Works</h2>
+    <div class="steps-grid">
+     <div class="step">
+      <div class="step-icon">
+       📱
+      </div>
+      <h3 class="step-title">Browse &amp; Order</h3>
+      <p class="step-description">Explore our curated menu of gourmet dishes and select your favorites</p>
+     </div>
+     <div class="step">
+      <div class="step-icon">
+       👨‍🍳
+      </div>
+      <h3 class="step-title">Chef Prepares</h3>
+      <p class="step-description">Our master chefs craft your meal with premium ingredients and artistic presentation</p>
+     </div>
+     <div class="step">
+      <div class="step-icon">
+       🚚
+      </div>
+      <h3 class="step-title">Fast Delivery</h3>
+      <p class="step-description">Enjoy restaurant-quality dining delivered fresh to your doorstep</p>
+     </div>
+    </div>
+   </div>
+  </section><!-- Rewards Sections -->
+  <section class="section">
+   <div class="container">
+    <h2 class="section-title">Earn While You Dine</h2>
+    <div class="rewards-grid">
+     <div class="reward-card">
+      <div class="reward-icon">
+       🎁
+      </div>
+      <h3 class="reward-title">Referral Rewards</h3>
+      <p class="reward-description">Share the culinary experience with friends and earn up to 60% off your orders</p><button class="reward-btn">Start Referring</button>
+     </div>
+     <div class="reward-card">
+      <div class="reward-icon">
+       🪙
+      </div>
+      <h3 class="reward-title">Token Rewards</h3>
+      <p class="reward-description">Collect loyalty tokens with every purchase and redeem for exclusive discounts</p><button class="reward-btn">View Tokens</button>
+     </div>
+    </div>
+   </div>
+  </section><!-- Customer Reviews -->
+  <section class="section" style="background: white;">
+   <div class="container">
+    <h2 class="section-title">What Our Customers Say</h2>
+    <div class="reviews-grid">
+     <div class="review-card">
+      <div class="stars">
+       ⭐⭐⭐⭐⭐
+      </div>
+      <p class="review-text">"Absolutely exceptional! The truffle risotto was a masterpiece, and the presentation was like art on a plate."</p>
+      <div class="reviewer">
+       <div class="reviewer-avatar">
+        SM
+       </div>
+       <div class="reviewer-name">
+        Sarah Mitchell
+       </div>
+      </div>
+     </div>
+     <div class="review-card">
+      <div class="stars">
+       ⭐⭐⭐⭐⭐
+      </div>
+      <p class="review-text">"The Literary Blend coffee is perfection in a cup. Fast delivery and the food arrived hot and beautifully packaged."</p>
+      <div class="reviewer">
+       <div class="reviewer-avatar">
+        JL
+       </div>
+       <div class="reviewer-name">
+        James Liu
+       </div>
+      </div>
+     </div>
+     <div class="review-card">
+      <div class="stars">
+       ⭐⭐⭐⭐⭐
+      </div>
+      <p class="review-text">"Every meal tells a story here. The attention to detail and quality ingredients make this my go-to for special occasions."</p>
+      <div class="reviewer">
+       <div class="reviewer-avatar">
+        MR
+       </div>
+       <div class="reviewer-name">
+        Maria Rodriguez
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </section><!-- Contact Us -->
+  <section class="section">
+   <div class="container">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-grid">
+     <div class="contact-item">
+      <div class="contact-icon">
+       📞
+      </div>
+      <h3 class="contact-title">Phone</h3>
+      <p class="contact-info" id="contact-phone">(555) 123-4567</p>
+     </div>
+     <div class="contact-item">
+      <div class="contact-icon">
+       ✉️
+      </div>
+      <h3 class="contact-title">Email</h3>
+      <p class="contact-info" id="contact-email">hello@litterateurcafe.com</p>
+     </div>
+     <div class="contact-item">
+      <div class="contact-icon">
+       📍
+      </div>
+      <h3 class="contact-title">Address</h3>
+      <p class="contact-info" id="contact-address">123 Culinary Street, Gourmet District</p>
+     </div>
+     <div class="contact-item">
+      <div class="contact-icon">
+       🕒
+      </div>
+      <h3 class="contact-title">Hours</h3>
+      <p class="contact-info">Daily: 8:00 AM - 10:00 PM</p>
+     </div>
+    </div>
+   </div>
+  </section>
+  <script>
+        // Element SDK Configuration
+        const defaultConfig = {
+            cafe_name: "Litterateur Cafe",
+            hero_tagline: "Where Every Bite Tells a Story",
+            order_button_text: "Order Now",
+            launch_discount_text: "✨ Launch Discount: Get Up to 60% Off! ✨",
+            contact_phone: "(555) 123-4567",
+            contact_email: "hello@litterateurcafe.com",
+            contact_address: "123 Culinary Street, Gourmet District",
+            background_color: "#F8F9FA",
+            primary_color: "#1B4332",
+            accent_color: "#D4AF37",
+            text_color: "#2D3436",
+            surface_color: "#FFFFFF",
+            font_family: "Playfair Display",
+            font_size: 16
+        };
+
+        // Element SDK Functions
+        async function onConfigChange(config) {
+            // Update text content
+            const cafeName = document.getElementById('cafe-name');
+            if (cafeName) cafeName.textContent = config.cafe_name || defaultConfig.cafe_name;
+            
+            const heroTagline = document.getElementById('hero-tagline');
+            if (heroTagline) heroTagline.textContent = config.hero_tagline || defaultConfig.hero_tagline;
+            
+            const orderButtonText = document.getElementById('order-button-text');
+            if (orderButtonText) orderButtonText.textContent = config.order_button_text || defaultConfig.order_button_text;
+            
+            const launchDiscountText = document.getElementById('launch-discount-text');
+            if (launchDiscountText) launchDiscountText.textContent = config.launch_discount_text || defaultConfig.launch_discount_text;
+            
+            const contactPhone = document.getElementById('contact-phone');
+            if (contactPhone) contactPhone.textContent = config.contact_phone || defaultConfig.contact_phone;
+            
+            const contactEmail = document.getElementById('contact-email');
+            if (contactEmail) contactEmail.textContent = config.contact_email || defaultConfig.contact_email;
+            
+            const contactAddress = document.getElementById('contact-address');
+            if (contactAddress) contactAddress.textContent = config.contact_address || defaultConfig.contact_address;
+
+            // Update colors
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+
+            document.body.style.backgroundColor = backgroundColor;
+            document.body.style.color = textColor;
+
+            // Update primary color elements
+            const hero = document.querySelector('.hero');
+            if (hero) hero.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+
+            const rewardCards = document.querySelectorAll('.reward-card');
+            rewardCards.forEach(card => {
+                card.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+            });
+
+            // Update accent color elements
+            const cafeName2 = document.querySelector('.cafe-name');
+            if (cafeName2) cafeName2.style.color = accentColor;
+
+            const orderBtn = document.querySelector('.order-btn');
+            if (orderBtn) {
+                orderBtn.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)`;
+                orderBtn.style.color = primaryColor;
+            }
+
+            const launchBanner = document.querySelector('.launch-banner');
+            if (launchBanner) {
+                launchBanner.style.background = `linear-gradient(90deg, ${accentColor} 0%, ${accentColor}dd 50%, ${accentColor} 100%)`;
+                launchBanner.style.color = primaryColor;
+            }
+
+            // Update surface color elements
+            const surfaceElements = document.querySelectorAll('.menu-item, .review-card, .contact-item');
+            surfaceElements.forEach(el => {
+                el.style.backgroundColor = surfaceColor;
+            });
+
+            // Update font
+            const customFont = config.font_family || defaultConfig.font_family;
+            const titleElements = document.querySelectorAll('.cafe-name, .section-title, .menu-title, .step-title, .reward-title, .contact-title');
+            titleElements.forEach(el => {
+                el.style.fontFamily = `${customFont}, serif`;
+            });
+
+            // Update font size
+            const baseSize = config.font_size || defaultConfig.font_size;
+            document.documentElement.style.fontSize = `${baseSize}px`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.accent_color || defaultConfig.accent_color,
+                        set: (value) => {
+                            config.accent_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["cafe_name", config.cafe_name || defaultConfig.cafe_name],
+                ["hero_tagline", config.hero_tagline || defaultConfig.hero_tagline],
+                ["order_button_text", config.order_button_text || defaultConfig.order_button_text],
+                ["launch_discount_text", config.launch_discount_text || defaultConfig.launch_discount_text],
+                ["contact_phone", config.contact_phone || defaultConfig.contact_phone],
+                ["contact_email", config.contact_email || defaultConfig.contact_email],
+                ["contact_address", config.contact_address || defaultConfig.contact_address]
+            ]);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange,
+                    mapToCapabilities,
+                    mapToEditPanelValues
+                });
+            }
+
+            // Smooth scrolling for order button
+            document.querySelector('.order-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector('#menu').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99678da8c4ff59d8',t:'MTc2MTc5MjA4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

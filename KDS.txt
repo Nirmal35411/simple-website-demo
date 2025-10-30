@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kitchen Display System</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000000;
+            color: #FFFFFF;
+            height: 100%;
+            overflow: hidden;
+            font-size: 18px;
+        }
+        
+        .kitchen-display {
+            display: flex;
+            height: 100%;
+            position: relative;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #1A1A1A;
+            border-bottom: 3px solid #333333;
+            padding: 16px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            height: 80px;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+        
+        .restaurant-name {
+            font-size: 28px;
+            font-weight: 900;
+            color: #FFFFFF;
+        }
+        
+        .station-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #CCCCCC;
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .control-btn {
+            background: #333333;
+            border: 2px solid #555555;
+            color: #FFFFFF;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 120px;
+        }
+        
+        .control-btn:hover {
+            background: #444444;
+            border-color: #666666;
+        }
+        
+        .control-btn.active {
+            background: #22C55E;
+            border-color: #16A34A;
+        }
+        
+        .refresh-btn {
+            background: #3B82F6;
+            border-color: #2563EB;
+        }
+        
+        .refresh-btn:hover {
+            background: #2563EB;
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-top: 80px;
+            padding: 24px;
+            overflow-y: auto;
+            height: calc(100% - 80px);
+        }
+        
+        .main-content.sidebar-open {
+            margin-right: 400px;
+        }
+        
+        /* Orders Grid */
+        .orders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+            padding-bottom: 24px;
+        }
+        
+        .order-card {
+            background: #1A1A1A;
+            border: 3px solid #333333;
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            transition: all 0.3s ease;
+            min-height: 400px;
+        }
+        
+        .order-card.new {
+            border-color: #3B82F6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .order-card.urgent {
+            border-color: #EF4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+            animation: urgentPulse 2s infinite;
+        }
+        
+        .order-card.ready {
+            border-color: #22C55E;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+        
+        @keyframes urgentPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.4); }
+            50% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.6); }
+        }
+        
+        /* Order Header */
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 16px;
+            border-radius: 8px;
+        }
+        
+        .order-header.new {
+            background: rgba(59, 130, 246, 0.2);
+        }
+        
+        .order-header.urgent {
+            background: rgba(239, 68, 68, 0.2);
+        }
+        
+        .order-header.ready {
+            background: rgba(34, 197, 94, 0.2);
+        }
+        
+        .order-number {
+            font-size: 48px;
+            font-weight: 900;
+            color: #FFFFFF;
+            line-height: 1;
+        }
+        
+        .order-time {
+            text-align: right;
+        }
+        
+        .time-elapsed {
+            font-size: 32px;
+            font-weight: 800;
+            color: #FFFFFF;
+            line-height: 1;
+        }
+        
+        .time-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #CCCCCC;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Customer Info */
+        .customer-info {
+            margin-bottom: 20px;
+            padding: 12px 16px;
+            background: #2A2A2A;
+            border-radius: 8px;
+        }
+        
+        .customer-digits {
+            font-size: 24px;
+            font-weight: 700;
+            color: #FFFFFF;
+        }
+        
+        .customer-label {
+            font-size: 14px;
+            color: #CCCCCC;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Items List */
+        .items-list {
+            margin-bottom: 24px;
+        }
+        
+        .item {
+            padding: 12px 0;
+            border-bottom: 1px solid #333333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #FFFFFF;
+            flex: 1;
+        }
+        
+        .item-quantity {
+            font-size: 20px;
+            font-weight: 800;
+            color: #3B82F6;
+            margin-left: 16px;
+            min-width: 40px;
+            text-align: center;
+        }
+        
+        /* Special Instructions */
+        .special-instructions {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid #EF4444;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions-label {
+            font-size: 14px;
+            font-weight: 700;
+            color: #EF4444;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        
+        .instructions-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #EF4444;
+            line-height: 1.4;
+        }
+        
+        /* Mark Prepared Button */
+        .mark-prepared-btn {
+            width: 100%;
+            background: #22C55E;
+            border: 3px solid #16A34A;
+            color: #FFFFFF;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .mark-prepared-btn:hover {
+            background: #16A34A;
+            transform: translateY(-2px);
+        }
+        
+        .mark-prepared-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 80px;
+            right: -400px;
+            width: 400px;
+            height: calc(100% - 80px);
+            background: #1A1A1A;
+            border-left: 3px solid #333333;
+            transition: right 0.3s ease;
+            z-index: 999;
+            overflow-y: auto;
+        }
+        
+        .sidebar.open {
+            right: 0;
+        }
+        
+        .sidebar-header {
+            padding: 24px;
+            border-bottom: 2px solid #333333;
+            background: #2A2A2A;
+        }
+        
+        .sidebar-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: #FFFFFF;
+        }
+        
+        .completed-orders {
+            padding: 16px;
+        }
+        
+        .completed-order {
+            background: #2A2A2A;
+            border: 2px solid #444444;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+        
+        .completed-order-number {
+            font-size: 20px;
+            font-weight: 700;
+            color: #22C55E;
+            margin-bottom: 8px;
+        }
+        
+        .completed-time {
+            font-size: 14px;
+            color: #CCCCCC;
+        }
+        
+        /* Sidebar Toggle */
+        .sidebar-toggle {
+            position: fixed;
+            top: 50%;
+            right: 16px;
+            transform: translateY(-50%);
+            background: #333333;
+            border: 2px solid #555555;
+            color: #FFFFFF;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            z-index: 1001;
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-toggle:hover {
+            background: #444444;
+        }
+        
+        .sidebar-toggle.open {
+            right: 416px;
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 24px;
+            color: #666666;
+        }
+        
+        .empty-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+        }
+        
+        .empty-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+        
+        .empty-message {
+            font-size: 20px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .orders-grid {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                gap: 16px;
+            }
+            
+            .sidebar {
+                width: 320px;
+            }
+            
+            .sidebar-toggle.open {
+                right: 336px;
+            }
+            
+            .main-content.sidebar-open {
+                margin-right: 320px;
+            }
+        }
+        
+        /* Focus States for Accessibility */
+        .control-btn:focus,
+        .mark-prepared-btn:focus,
+        .sidebar-toggle:focus {
+            outline: 3px solid #3B82F6;
+            outline-offset: 2px;
+        }
+        
+        /* Screen Reader Only */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="kitchen-display"><!-- Header -->
+   <header class="header">
+    <div class="header-left">
+     <h1 class="restaurant-name" id="restaurant-name">Kitchen Display</h1><span class="station-name" id="station-name">Main Kitchen</span>
+    </div>
+    <div class="header-controls"><button class="control-btn" id="sound-toggle" onclick="toggleSound()" aria-label="Toggle sound notifications"> 🔊 Sound ON </button> <button class="control-btn refresh-btn" id="refresh-btn" onclick="refreshOrders()" aria-label="Refresh orders"> <span id="refresh-button-text">Refresh Orders</span> </button>
+    </div>
+   </header><!-- Main Content -->
+   <main class="main-content" id="main-content">
+    <div class="orders-grid" id="orders-grid"><!-- Sample Orders -->
+     <div class="order-card new" role="article" aria-labelledby="order-156">
+      <div class="order-header new">
+       <div class="order-number" id="order-156">
+        #156
+       </div>
+       <div class="order-time">
+        <div class="time-elapsed" id="time-156">
+         03:45
+        </div>
+        <div class="time-label">
+         Minutes
+        </div>
+       </div>
+      </div>
+      <div class="customer-info">
+       <div class="customer-label">
+        Customer
+       </div>
+       <div class="customer-digits">
+        ****2847
+       </div>
+      </div>
+      <div class="items-list">
+       <div class="item"><span class="item-name">Grilled Chicken Sandwich</span> <span class="item-quantity">×2</span>
+       </div>
+       <div class="item"><span class="item-name">Caesar Salad</span> <span class="item-quantity">×1</span>
+       </div>
+       <div class="item"><span class="item-name">French Fries</span> <span class="item-quantity">×2</span>
+       </div>
+      </div>
+      <div class="special-instructions">
+       <div class="instructions-label">
+        Special Instructions
+       </div>
+       <div class="instructions-text">
+        NO MAYO, EXTRA PICKLES, FRIES WELL DONE
+       </div>
+      </div><button class="mark-prepared-btn" onclick="markPrepared(156)" aria-label="Mark order 156 as prepared"> <span id="mark-prepared-text">Mark Prepared</span> </button>
+     </div>
+     <div class="order-card urgent" role="article" aria-labelledby="order-154">
+      <div class="order-header urgent">
+       <div class="order-number" id="order-154">
+        #154
+       </div>
+       <div class="order-time">
+        <div class="time-elapsed" id="time-154">
+         12:30
+        </div>
+        <div class="time-label">
+         Minutes
+        </div>
+       </div>
+      </div>
+      <div class="customer-info">
+       <div class="customer-label">
+        Customer
+       </div>
+       <div class="customer-digits">
+        ****9156
+       </div>
+      </div>
+      <div class="items-list">
+       <div class="item"><span class="item-name">Beef Burger Deluxe</span> <span class="item-quantity">×1</span>
+       </div>
+       <div class="item"><span class="item-name">Onion Rings</span> <span class="item-quantity">×1</span>
+       </div>
+       <div class="item"><span class="item-name">Chocolate Shake</span> <span class="item-quantity">×1</span>
+       </div>
+      </div><button class="mark-prepared-btn" onclick="markPrepared(154)" aria-label="Mark order 154 as prepared"> <span>Mark Prepared</span> </button>
+     </div>
+     <div class="order-card new" role="article" aria-labelledby="order-157">
+      <div class="order-header new">
+       <div class="order-number" id="order-157">
+        #157
+       </div>
+       <div class="order-time">
+        <div class="time-elapsed" id="time-157">
+         01:15
+        </div>
+        <div class="time-label">
+         Minutes
+        </div>
+       </div>
+      </div>
+      <div class="customer-info">
+       <div class="customer-label">
+        Customer
+       </div>
+       <div class="customer-digits">
+        ****7423
+       </div>
+      </div>
+      <div class="items-list">
+       <div class="item"><span class="item-name">Fish &amp; Chips</span> <span class="item-quantity">×1</span>
+       </div>
+       <div class="item"><span class="item-name">Coleslaw</span> <span class="item-quantity">×1</span>
+       </div>
+      </div>
+      <div class="special-instructions">
+       <div class="instructions-label">
+        Special Instructions
+       </div>
+       <div class="instructions-text">
+        EXTRA TARTAR SAUCE, NO LEMON
+       </div>
+      </div><button class="mark-prepared-btn" onclick="markPrepared(157)" aria-label="Mark order 157 as prepared"> <span>Mark Prepared</span> </button>
+     </div>
+    </div>
+   </main><!-- Sidebar -->
+   <aside class="sidebar" id="sidebar" role="complementary" aria-label="Completed orders">
+    <div class="sidebar-header">
+     <h2 class="sidebar-title" id="completed-orders-title">Completed Orders</h2>
+    </div>
+    <div class="completed-orders" id="completed-orders">
+     <div class="completed-order">
+      <div class="completed-order-number">
+       #153
+      </div>
+      <div class="completed-time">
+       Completed 5 minutes ago
+      </div>
+     </div>
+     <div class="completed-order">
+      <div class="completed-order-number">
+       #152
+      </div>
+      <div class="completed-time">
+       Completed 8 minutes ago
+      </div>
+     </div>
+     <div class="completed-order">
+      <div class="completed-order-number">
+       #151
+      </div>
+      <div class="completed-time">
+       Completed 12 minutes ago
+      </div>
+     </div>
+     <div class="completed-order">
+      <div class="completed-order-number">
+       #150
+      </div>
+      <div class="completed-time">
+       Completed 15 minutes ago
+      </div>
+     </div>
+     <div class="completed-order">
+      <div class="completed-order-number">
+       #149
+      </div>
+      <div class="completed-time">
+       Completed 18 minutes ago
+      </div>
+     </div>
+    </div>
+   </aside><!-- Sidebar Toggle --> <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle completed orders sidebar"> 📋 </button>
+  </div><!-- Audio for notifications -->
+  <audio id="notification-sound" preload="auto">
+  </audio>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9967ba1fb3bac51e',t:'MTc2MTc5MzkwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

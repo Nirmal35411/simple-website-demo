@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loyalty Tokens Dashboard - Litterateur Cafe</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2D3436;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        /* Floating Coins Animation */
+        .floating-coins {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        
+        .coin {
+            position: absolute;
+            font-size: 32px;
+            animation: float-coin 8s linear infinite;
+            opacity: 0.7;
+        }
+        
+        @keyframes float-coin {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.7;
+            }
+            90% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: #F8F9FA;
+            padding: 32px 0;
+            text-align: center;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 30px rgba(27, 67, 50, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            animation: header-glow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes header-glow {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Token Balance Badge */
+        .balance-section {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+        
+        .balance-badge {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+            color: #1B4332;
+            padding: 32px 48px;
+            border-radius: 24px;
+            display: inline-block;
+            box-shadow: 0 12px 40px rgba(212, 175, 55, 0.3);
+            animation: balance-pulse 2s ease-in-out infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes balance-pulse {
+            0% { 
+                transform: scale(1);
+                box-shadow: 0 12px 40px rgba(212, 175, 55, 0.3);
+            }
+            100% { 
+                transform: scale(1.05);
+                box-shadow: 0 16px 50px rgba(212, 175, 55, 0.5);
+            }
+        }
+        
+        .balance-badge::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 3s ease-in-out infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+        
+        .balance-label {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .balance-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+        
+        .coin-icon {
+            font-size: 40px;
+            animation: coin-spin 2s linear infinite;
+        }
+        
+        @keyframes coin-spin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        /* Progress Section */
+        .progress-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .progress-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1B4332;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .tier-badge {
+            background: linear-gradient(135deg, #27AE60 0%, #2ECC71 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .progress-bar-container {
+            background: #E9ECEF;
+            height: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #27AE60 0%, #D4AF37 50%, #E74C3C 100%);
+            border-radius: 8px;
+            width: 73%;
+            animation: progress-fill 2s ease-out;
+            position: relative;
+        }
+        
+        @keyframes progress-fill {
+            0% { width: 0%; }
+            100% { width: 73%; }
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: progress-shine 2s ease-in-out infinite;
+        }
+        
+        @keyframes progress-shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .progress-text {
+            text-align: center;
+            color: #6C757D;
+            font-weight: 500;
+        }
+        
+        .progress-numbers {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #6C757D;
+            margin-top: 8px;
+        }
+        
+        /* Token Rules */
+        .rules-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .rules-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
+        .rule-card {
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            border: 2px solid #E9ECEF;
+            transition: all 0.3s ease;
+        }
+        
+        .rule-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-color: #D4AF37;
+        }
+        
+        .rule-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+        }
+        
+        .rule-title {
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+        
+        .rule-description {
+            color: #6C757D;
+            font-size: 14px;
+        }
+        
+        /* Action Buttons */
+        .actions-section {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: #F8F9FA;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(27, 67, 50, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(27, 67, 50, 0.3);
+        }
+        
+        .action-btn.redeem {
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+            color: #1B4332;
+        }
+        
+        .action-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Token History */
+        .history-section {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .history-header {
+            padding: 24px 32px;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+            border-bottom: 1px solid #E9ECEF;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+        }
+        
+        .history-header:hover {
+            background: linear-gradient(135deg, #E9ECEF 0%, #DEE2E6 100%);
+        }
+        
+        .history-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #1B4332;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .expand-icon {
+            font-size: 20px;
+            color: #6C757D;
+            transition: transform 0.3s ease;
+        }
+        
+        .history-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .history-content.expanded {
+            max-height: 500px;
+        }
+        
+        .history-item {
+            padding: 20px 32px;
+            border-bottom: 1px solid #F8F9FA;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background 0.3s ease;
+        }
+        
+        .history-item:hover {
+            background: #F8F9FA;
+        }
+        
+        .history-item:last-child {
+            border-bottom: none;
+        }
+        
+        .history-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .history-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .history-icon.earned {
+            background: #D1F2EB;
+            color: #27AE60;
+        }
+        
+        .history-icon.redeemed {
+            background: #FCF3CF;
+            color: #F39C12;
+        }
+        
+        .history-details {
+            flex: 1;
+        }
+        
+        .history-action {
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 4px;
+        }
+        
+        .history-date {
+            font-size: 14px;
+            color: #6C757D;
+        }
+        
+        .history-amount {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .history-amount.positive {
+            color: #27AE60;
+        }
+        
+        .history-amount.negative {
+            color: #E74C3C;
+        }
+        
+        /* Success Message */
+        .success-message {
+            background: #D1F2EB;
+            color: #27AE60;
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+            animation: slide-down 0.3s ease-out;
+        }
+        
+        @keyframes slide-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 32px;
+            }
+            
+            .balance-badge {
+                padding: 24px 32px;
+            }
+            
+            .balance-amount {
+                font-size: 36px;
+            }
+            
+            .rules-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .actions-section {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .progress-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .history-item {
+                padding: 16px 24px;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Floating Coins -->
+  <div class="floating-coins">
+   <div class="coin" style="left: 10%; animation-delay: 0s;">
+    🪙
+   </div>
+   <div class="coin" style="left: 25%; animation-delay: 2s;">
+    🪙
+   </div>
+   <div class="coin" style="left: 40%; animation-delay: 4s;">
+    🪙
+   </div>
+   <div class="coin" style="left: 60%; animation-delay: 1s;">
+    🪙
+   </div>
+   <div class="coin" style="left: 75%; animation-delay: 3s;">
+    🪙
+   </div>
+   <div class="coin" style="left: 90%; animation-delay: 5s;">
+    🪙
+   </div>
+  </div>
+  <div class="container"><!-- Header -->
+   <header class="header">
+    <h1 class="page-title" id="page-title">Loyalty Tokens</h1>
+    <p class="page-subtitle">Earn, collect, and redeem tokens for amazing rewards</p>
+   </header><!-- Success Message -->
+   <div class="success-message" id="success-message">
+    🎉 Tokens redeemed successfully! Your discount has been applied.
+   </div><!-- Token Balance -->
+   <section class="balance-section">
+    <div class="balance-badge">
+     <div class="balance-label" id="balance-label">
+      Your Token Balance
+     </div>
+     <div class="balance-amount"><span class="coin-icon">🪙</span> <span id="token-balance">1,247</span>
+     </div>
+    </div>
+   </section><!-- Progress to Next Tier -->
+   <section class="progress-section">
+    <div class="progress-header">
+     <h2 class="progress-title">⭐ Progress to Next Tier</h2>
+     <div class="tier-badge">
+      🏆 Gold Member
+     </div>
+    </div>
+    <div class="progress-bar-container">
+     <div class="progress-bar"></div>
+    </div>
+    <p class="progress-text"><strong>253</strong> <span id="progress-text">tokens to next tier</span> • <strong>15% discount</strong> at Platinum level</p>
+    <div class="progress-numbers"><span>1,247 tokens</span> <span>1,500 tokens (Platinum)</span>
+    </div>
+   </section><!-- Token Earning Rules -->
+   <section class="rules-section">
+    <h2 class="rules-title" id="earning-rules-title">💡 How to Earn Tokens</h2>
+    <div class="rules-grid">
+     <div class="rule-card"><span class="rule-icon">💰</span>
+      <h3 class="rule-title">Spend &amp; Earn</h3>
+      <p class="rule-description">₹100 spent = 10 tokens earned</p>
+     </div>
+     <div class="rule-card"><span class="rule-icon">🎯</span>
+      <h3 class="rule-title">Redeem Rewards</h3>
+      <p class="rule-description">100 tokens = 1% discount</p>
+     </div>
+     <div class="rule-card"><span class="rule-icon">🎂</span>
+      <h3 class="rule-title">Birthday Bonus</h3>
+      <p class="rule-description">500 bonus tokens on your birthday</p>
+     </div>
+     <div class="rule-card"><span class="rule-icon">👥</span>
+      <h3 class="rule-title">Referral Rewards</h3>
+      <p class="rule-description">200 tokens per successful referral</p>
+     </div>
+    </div>
+   </section><!-- Action Buttons -->
+   <section class="actions-section"><button class="action-btn redeem" onclick="redeemTokens()" id="redeem-btn"> 🎁 <span id="redeem-button-text">Redeem Tokens</span> </button> <button class="action-btn" onclick="viewRewards()"> 🏪 View Rewards Catalog </button>
+   </section><!-- Token History -->
+   <section class="history-section">
+    <div class="history-header" onclick="toggleHistory()">
+     <h2 class="history-title" id="history-title">📊 Token History</h2><span class="expand-icon" id="expand-icon">▼</span>
+    </div>
+    <div class="history-content" id="history-content">
+     <div class="history-item">
+      <div class="history-info">
+       <div class="history-icon earned">
+        +
+       </div>
+       <div class="history-details">
+        <div class="history-action">
+         Order Purchase
+        </div>
+        <div class="history-date">
+         Today, 2:30 PM
+        </div>
+       </div>
+      </div>
+      <div class="history-amount positive">
+       +50 🪙
+      </div>
+     </div>
+     <div class="history-item">
+      <div class="history-info">
+       <div class="history-icon redeemed">
+        -
+       </div>
+       <div class="history-details">
+        <div class="history-action">
+         5% Discount Redeemed
+        </div>
+        <div class="history-date">
+         Yesterday, 6:45 PM
+        </div>
+       </div>
+      </div>
+      <div class="history-amount negative">
+       -500 🪙
+      </div>
+     </div>
+     <div class="history-item">
+      <div class="history-info">
+       <div class="history-icon earned">
+        +
+       </div>
+       <div class="history-details">
+        <div class="history-action">
+         Referral Bonus
+        </div>
+        <div class="history-date">
+         3 days ago
+        </div>
+       </div>
+      </div>
+      <div class="history-amount positive">
+       +200 🪙
+      </div>
+     </div>
+     <div class="history-item">
+      <div class="history-info">
+       <div class="history-icon earned">
+        +
+       </div>
+       <div class="history-details">
+        <div class="history-action">
+         Order Purchase
+        </div>
+        <div class="history-date">
+         1 week ago
+        </div>
+       </div>
+      </div>
+      <div class="history-amount positive">
+       +120 🪙
+      </div>
+     </div>
+     <div class="history-item">
+      <div class="history-info">
+       <div class="history-icon earned">
+        +
+       </div>
+       <div class="history-details">
+        <div class="history-action">
+         Birthday Bonus
+        </div>
+        <div class="history-date">
+         2 weeks ago
+        </div>
+       </div>
+      </div>
+      <div class="history-amount positive">
+       +500 🪙
+      </div>
+     </div>
+    </div>
+   </section>
+  </div>
+  <script>
+        // Element SDK Configuration
+        const defaultConfig = {
+            page_title: "Loyalty Tokens",
+            balance_label: "Your Token Balance",
+            progress_text: "tokens to next tier",
+            redeem_button_text: "Redeem Tokens",
+            history_title: "Token History",
+            earning_rules_title: "How to Earn Tokens",
+            background_color: "#F8F9FA",
+            primary_color: "#1B4332",
+            accent_color: "#D4AF37",
+            text_color: "#2D3436",
+            surface_color: "#FFFFFF",
+            font_family: "Playfair Display",
+            font_size: 16
+        };
+
+        let currentTokens = 1247;
+        let historyExpanded = false;
+
+        // Redeem tokens functionality
+        function redeemTokens() {
+            if (currentTokens >= 100) {
+                const tokensToRedeem = Math.floor(currentTokens / 100) * 100;
+                const discountPercent = tokensToRedeem / 100;
+                
+                currentTokens -= tokensToRedeem;
+                document.getElementById('token-balance').textContent = currentTokens.toLocaleString();
+                
+                // Show success message
+                const successMessage = document.getElementById('success-message');
+                successMessage.style.display = 'block';
+                successMessage.innerHTML = `🎉 ${tokensToRedeem} tokens redeemed for ${discountPercent}% discount!`;
+                
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 4000);
+                
+                // Add to history
+                addHistoryItem('Discount Redeemed', `${discountPercent}% discount applied`, -tokensToRedeem);
+                
+                // Update progress bar
+                updateProgressBar();
+            } else {
+                alert('You need at least 100 tokens to redeem a discount.');
+            }
+        }
+
+        function viewRewards() {
+            alert('Rewards catalog coming soon! You can redeem tokens for discounts, free items, and exclusive experiences.');
+        }
+
+        function toggleHistory() {
+            const historyContent = document.getElementById('history-content');
+            const expandIcon = document.getElementById('expand-icon');
+            
+            historyExpanded = !historyExpanded;
+            
+            if (historyExpanded) {
+                historyContent.classList.add('expanded');
+                expandIcon.textContent = '▲';
+            } else {
+                historyContent.classList.remove('expanded');
+                expandIcon.textContent = '▼';
+            }
+        }
+
+        function addHistoryItem(action, description, amount) {
+            const historyContent = document.getElementById('history-content');
+            const newItem = document.createElement('div');
+            newItem.className = 'history-item';
+            
+            const isPositive = amount > 0;
+            const iconClass = isPositive ? 'earned' : 'redeemed';
+            const amountClass = isPositive ? 'positive' : 'negative';
+            const sign = isPositive ? '+' : '';
+            
+            newItem.innerHTML = `
+                <div class="history-info">
+                    <div class="history-icon ${iconClass}">${isPositive ? '+' : '-'}</div>
+                    <div class="history-details">
+                        <div class="history-action">${action}</div>
+                        <div class="history-date">Just now</div>
+                    </div>
+                </div>
+                <div class="history-amount ${amountClass}">${sign}${Math.abs(amount)} 🪙</div>
+            `;
+            
+            historyContent.insertBefore(newItem, historyContent.firstChild);
+        }
+
+        function updateProgressBar() {
+            const progressBar = document.querySelector('.progress-bar');
+            const progressText = document.querySelector('.progress-text');
+            const progressNumbers = document.querySelector('.progress-numbers');
+            
+            const nextTierTokens = 1500;
+            const tokensNeeded = nextTierTokens - currentTokens;
+            const progressPercent = (currentTokens / nextTierTokens) * 100;
+            
+            progressBar.style.width = `${Math.min(progressPercent, 100)}%`;
+            
+            if (tokensNeeded > 0) {
+                progressText.innerHTML = `<strong>${tokensNeeded}</strong> <span id="progress-text">tokens to next tier</span> • <strong>15% discount</strong> at Platinum level`;
+                progressNumbers.innerHTML = `
+                    <span>${currentTokens.toLocaleString()} tokens</span>
+                    <span>1,500 tokens (Platinum)</span>
+                `;
+            } else {
+                progressText.innerHTML = `🎉 <strong>Platinum tier achieved!</strong> • <strong>15% discount</strong> unlocked`;
+                progressNumbers.innerHTML = `
+                    <span>${currentTokens.toLocaleString()} tokens</span>
+                    <span>Platinum Member</span>
+                `;
+            }
+        }
+
+        // Create floating coins dynamically
+        function createFloatingCoin() {
+            const coin = document.createElement('div');
+            coin.className = 'coin';
+            coin.textContent = '🪙';
+            coin.style.left = Math.random() * 100 + '%';
+            coin.style.animationDelay = '0s';
+            coin.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            
+            document.querySelector('.floating-coins').appendChild(coin);
+            
+            setTimeout(() => {
+                coin.remove();
+            }, 8000);
+        }
+
+        // Element SDK Functions
+        async function onConfigChange(config) {
+            // Update text content
+            const pageTitle = document.getElementById('page-title');
+            if (pageTitle) pageTitle.textContent = config.page_title || defaultConfig.page_title;
+            
+            const balanceLabel = document.getElementById('balance-label');
+            if (balanceLabel) balanceLabel.textContent = config.balance_label || defaultConfig.balance_label;
+            
+            const progressText = document.getElementById('progress-text');
+            if (progressText) progressText.textContent = config.progress_text || defaultConfig.progress_text;
+            
+            const redeemButtonText = document.getElementById('redeem-button-text');
+            if (redeemButtonText) redeemButtonText.textContent = config.redeem_button_text || defaultConfig.redeem_button_text;
+            
+            const historyTitle = document.getElementById('history-title');
+            if (historyTitle) {
+                historyTitle.innerHTML = `📊 ${config.history_title || defaultConfig.history_title}`;
+            }
+            
+            const earningRulesTitle = document.getElementById('earning-rules-title');
+            if (earningRulesTitle) {
+                earningRulesTitle.innerHTML = `💡 ${config.earning_rules_title || defaultConfig.earning_rules_title}`;
+            }
+
+            // Update colors
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+
+            document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, #E9ECEF 100%)`;
+            document.body.style.color = textColor;
+
+            // Update primary color elements
+            const header = document.querySelector('.header');
+            if (header) header.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+
+            const actionBtns = document.querySelectorAll('.action-btn:not(.redeem)');
+            actionBtns.forEach(btn => {
+                btn.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+            });
+
+            // Update accent color elements
+            const balanceBadge = document.querySelector('.balance-badge');
+            if (balanceBadge) {
+                balanceBadge.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)`;
+            }
+
+            const redeemBtn = document.querySelector('.action-btn.redeem');
+            if (redeemBtn) {
+                redeemBtn.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)`;
+            }
+
+            // Update surface color elements
+            const surfaceElements = document.querySelectorAll('.progress-section, .rules-section, .history-section');
+            surfaceElements.forEach(el => {
+                el.style.backgroundColor = surfaceColor;
+            });
+
+            // Update font
+            const customFont = config.font_family || defaultConfig.font_family;
+            const titleElements = document.querySelectorAll('.page-title, .progress-title, .rules-title, .history-title');
+            titleElements.forEach(el => {
+                el.style.fontFamily = `${customFont}, serif`;
+            });
+
+            // Update font size
+            const baseSize = config.font_size || defaultConfig.font_size;
+            document.documentElement.style.fontSize = `${baseSize}px`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.accent_color || defaultConfig.accent_color,
+                        set: (value) => {
+                            config.accent_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["page_title", config.page_title || defaultConfig.page_title],
+                ["balance_label", config.balance_label || defaultConfig.balance_label],
+                ["progress_text", config.progress_text || defaultConfig.progress_text],
+                ["redeem_button_text", config.redeem_button_text || defaultConfig.redeem_button_text],
+                ["history_title", config.history_title || defaultConfig.history_title],
+                ["earning_rules_title", config.earning_rules_title || defaultConfig.earning_rules_title]
+            ]);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange,
+                    mapToCapabilities,
+                    mapToEditPanelValues
+                });
+            }
+
+            // Create floating coins periodically
+            setInterval(createFloatingCoin, 2000);
+            
+            // Initial progress bar update
+            updateProgressBar();
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99679b2a000359d8',t:'MTc2MTc5MjYzNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

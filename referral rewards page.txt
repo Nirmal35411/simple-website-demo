@@ -1,0 +1,968 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Referral Rewards - Litterateur Cafe</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2D3436;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+            height: 100%;
+            overflow-x: hidden;
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #D4AF37;
+            animation: confetti-fall 3s linear infinite;
+            z-index: 1;
+        }
+        
+        .confetti:nth-child(odd) {
+            background: #1B4332;
+            animation-duration: 2.5s;
+            animation-delay: -0.5s;
+        }
+        
+        .confetti:nth-child(3n) {
+            background: #E74C3C;
+            animation-duration: 3.5s;
+            animation-delay: -1s;
+        }
+        
+        .confetti:nth-child(4n) {
+            background: #27AE60;
+            animation-duration: 2.8s;
+            animation-delay: -1.5s;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Launch Banner */
+        .launch-banner {
+            background: linear-gradient(90deg, #D4AF37 0%, #F4D03F 50%, #D4AF37 100%);
+            color: #1B4332;
+            text-align: center;
+            padding: 20px;
+            font-weight: 700;
+            font-size: 20px;
+            position: relative;
+            overflow: hidden;
+            animation: banner-pulse 2s ease-in-out infinite alternate;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        @keyframes banner-pulse {
+            0% { 
+                box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+                transform: scale(1);
+            }
+            100% { 
+                box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+                transform: scale(1.02);
+            }
+        }
+        
+        .banner-sparkles {
+            position: absolute;
+            font-size: 24px;
+            animation: sparkle-rotate 2s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle-rotate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: #F8F9FA;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            animation: hero-glow 4s ease-in-out infinite alternate;
+        }
+        
+        @keyframes hero-glow {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-bottom: 16px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: title-bounce 2s ease-out;
+        }
+        
+        @keyframes title-bounce {
+            0% { transform: translateY(-50px); opacity: 0; }
+            60% { transform: translateY(10px); }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        .hero-subtitle {
+            font-size: 24px;
+            margin-bottom: 32px;
+            opacity: 0.95;
+            animation: fade-in-up 1s ease-out 0.5s both;
+        }
+        
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 0.95; transform: translateY(0); }
+        }
+        
+        /* Discount Progression Infographic */
+        .progression-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            text-align: center;
+            color: #1B4332;
+            margin-bottom: 48px;
+        }
+        
+        .progression-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+        }
+        
+        .progression-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            animation: step-pulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes step-pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        
+        .step-percentage {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1B4332;
+        }
+        
+        .step-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 8px;
+        }
+        
+        .step-description {
+            color: #6C757D;
+            font-size: 14px;
+        }
+        
+        .progression-arrow {
+            font-size: 32px;
+            color: #D4AF37;
+            animation: arrow-bounce 1s ease-in-out infinite alternate;
+        }
+        
+        @keyframes arrow-bounce {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(10px); }
+        }
+        
+        /* Progress Bar */
+        .progress-bar-container {
+            background: #E9ECEF;
+            height: 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 32px 0;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #27AE60 0%, #D4AF37 50%, #E74C3C 100%);
+            border-radius: 6px;
+            animation: progress-fill 3s ease-out;
+        }
+        
+        @keyframes progress-fill {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        /* Referral Code Section */
+        .referral-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+        }
+        
+        .referral-code-container {
+            background: white;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+            margin-bottom: 48px;
+        }
+        
+        .code-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 24px;
+        }
+        
+        .code-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .referral-code {
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: #D4AF37;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+            border: 3px solid #D4AF37;
+            box-shadow: 0 4px 15px rgba(27, 67, 50, 0.2);
+        }
+        
+        .copy-btn {
+            background: #D4AF37;
+            color: #1B4332;
+            border: none;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+        
+        .copy-btn:hover {
+            background: #F4D03F;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.4);
+        }
+        
+        .copy-btn.copied {
+            background: #27AE60;
+            color: white;
+        }
+        
+        /* Share Buttons */
+        .share-section {
+            text-align: center;
+        }
+        
+        .share-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 32px;
+        }
+        
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .share-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .share-btn.whatsapp { background: #25D366; }
+        .share-btn.instagram { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF); }
+        .share-btn.facebook { background: #1877F2; }
+        .share-btn.twitter { background: #1DA1F2; }
+        .share-btn.email { background: #EA4335; }
+        
+        /* Leaderboard */
+        .leaderboard-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .leaderboard-container {
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .leaderboard-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .rank {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        
+        .rank.first { background: #D4AF37; color: white; }
+        .rank.second { background: #C0C0C0; color: white; }
+        .rank.third { background: #CD7F32; color: white; }
+        .rank.other { background: #E9ECEF; color: #6C757D; }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 4px;
+        }
+        
+        .user-referrals {
+            color: #6C757D;
+            font-size: 14px;
+        }
+        
+        .user-reward {
+            font-weight: 700;
+            color: #D4AF37;
+            font-size: 18px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 42px;
+            }
+            
+            .hero-subtitle {
+                font-size: 20px;
+            }
+            
+            .section-title {
+                font-size: 32px;
+            }
+            
+            .progression-container {
+                flex-direction: column;
+                gap: 32px;
+            }
+            
+            .progression-arrow {
+                transform: rotate(90deg);
+            }
+            
+            .code-display {
+                flex-direction: column;
+                gap: 16px;
+            }
+            
+            .referral-code {
+                font-size: 20px;
+                padding: 12px 24px;
+            }
+            
+            .share-buttons {
+                gap: 12px;
+            }
+            
+            .share-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Confetti Elements -->
+  <div class="confetti" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="confetti" style="left: 20%; animation-delay: -0.5s;"></div>
+  <div class="confetti" style="left: 30%; animation-delay: -1s;"></div>
+  <div class="confetti" style="left: 40%; animation-delay: -1.5s;"></div>
+  <div class="confetti" style="left: 50%; animation-delay: -2s;"></div>
+  <div class="confetti" style="left: 60%; animation-delay: -2.5s;"></div>
+  <div class="confetti" style="left: 70%; animation-delay: -3s;"></div>
+  <div class="confetti" style="left: 80%; animation-delay: -0.8s;"></div>
+  <div class="confetti" style="left: 90%; animation-delay: -1.2s;"></div><!-- Launch Banner -->
+  <div class="launch-banner"><span id="launch-banner-text">🎉 Launch Offer: 20% OFF + Earn Up to 60% Discount 🎉</span>
+   <div class="banner-sparkles" style="left: 5%; top: 50%; animation-delay: 0s;">
+    ✨
+   </div>
+   <div class="banner-sparkles" style="right: 5%; top: 50%; animation-delay: 1s;">
+    ⭐
+   </div>
+  </div><!-- Hero Section -->
+  <section class="hero">
+   <div class="container">
+    <div class="hero-content">
+     <h1 class="hero-title" id="page-title">Invite &amp; Earn</h1>
+     <p class="hero-subtitle">Share the culinary experience and unlock amazing rewards</p>
+    </div>
+   </div>
+  </section><!-- Discount Progression -->
+  <section class="progression-section">
+   <div class="container">
+    <h2 class="section-title">Your Reward Journey</h2>
+    <div class="progression-container">
+     <div class="progression-step">
+      <div class="step-circle"><span class="step-percentage">30%</span>
+      </div>
+      <h3 class="step-title">First Referral</h3>
+      <p class="step-description">Get 30% off when your first friend joins</p>
+     </div>
+     <div class="progression-arrow">
+      →
+     </div>
+     <div class="progression-step">
+      <div class="step-circle"><span class="step-percentage">45%</span>
+      </div>
+      <h3 class="step-title">3 Referrals</h3>
+      <p class="step-description">Unlock 45% discount with 3 successful referrals</p>
+     </div>
+     <div class="progression-arrow">
+      →
+     </div>
+     <div class="progression-step">
+      <div class="step-circle"><span class="step-percentage">60%</span>
+      </div>
+      <h3 class="step-title">5+ Referrals</h3>
+      <p class="step-description">Maximum 60% off for our top ambassadors</p>
+     </div>
+    </div>
+    <div class="progress-bar-container">
+     <div class="progress-bar"></div>
+    </div>
+    <p style="text-align: center; color: #6C757D; font-style: italic;">Each new referral brings you closer to maximum savings!</p>
+   </div>
+  </section><!-- Referral Code & Share -->
+  <section class="referral-section">
+   <div class="container">
+    <div class="referral-code-container">
+     <h2 class="code-title">Your Unique Referral Code</h2>
+     <div class="code-display">
+      <div class="referral-code" id="referral-code">
+       FOODIE2024
+      </div><button class="copy-btn" id="copy-btn" onclick="copyReferralCode()"> <span id="copy-button-text">Copy Code</span> </button>
+     </div>
+     <p style="color: #6C757D;">Share this code with friends to start earning rewards!</p>
+    </div>
+    <div class="share-section">
+     <h2 class="share-title">Share with Friends</h2>
+     <div class="share-buttons"><button class="share-btn whatsapp" onclick="shareOnWhatsApp()" aria-label="Share on WhatsApp"> 📱 </button> <button class="share-btn instagram" onclick="shareOnInstagram()" aria-label="Share on Instagram"> 📷 </button> <button class="share-btn facebook" onclick="shareOnFacebook()" aria-label="Share on Facebook"> 📘 </button> <button class="share-btn twitter" onclick="shareOnTwitter()" aria-label="Share on Twitter"> 🐦 </button> <button class="share-btn email" onclick="shareViaEmail()" aria-label="Share via Email"> ✉️ </button>
+     </div>
+    </div>
+   </div>
+  </section><!-- Leaderboard -->
+  <section class="leaderboard-section">
+   <div class="container">
+    <h2 class="section-title" id="leaderboard-title">Top Referrers This Month</h2>
+    <div class="leaderboard-container">
+     <div class="leaderboard-item">
+      <div class="rank first">
+       1
+      </div>
+      <div class="user-info">
+       <div class="user-name">
+        Sarah Mitchell
+       </div>
+       <div class="user-referrals">
+        23 successful referrals
+       </div>
+      </div>
+      <div class="user-reward">
+       60% OFF
+      </div>
+     </div>
+     <div class="leaderboard-item">
+      <div class="rank second">
+       2
+      </div>
+      <div class="user-info">
+       <div class="user-name">
+        James Liu
+       </div>
+       <div class="user-referrals">
+        18 successful referrals
+       </div>
+      </div>
+      <div class="user-reward">
+       60% OFF
+      </div>
+     </div>
+     <div class="leaderboard-item">
+      <div class="rank third">
+       3
+      </div>
+      <div class="user-info">
+       <div class="user-name">
+        Maria Rodriguez
+       </div>
+       <div class="user-referrals">
+        15 successful referrals
+       </div>
+      </div>
+      <div class="user-reward">
+       60% OFF
+      </div>
+     </div>
+     <div class="leaderboard-item">
+      <div class="rank other">
+       4
+      </div>
+      <div class="user-info">
+       <div class="user-name">
+        Alex Chen
+       </div>
+       <div class="user-referrals">
+        12 successful referrals
+       </div>
+      </div>
+      <div class="user-reward">
+       60% OFF
+      </div>
+     </div>
+     <div class="leaderboard-item">
+      <div class="rank other">
+       5
+      </div>
+      <div class="user-info">
+       <div class="user-name">
+        Emma Thompson
+       </div>
+       <div class="user-referrals">
+        8 successful referrals
+       </div>
+      </div>
+      <div class="user-reward">
+       60% OFF
+      </div>
+     </div>
+     <div class="leaderboard-item">
+      <div class="rank other">
+       6
+      </div>
+      <div class="user-info">
+       <div class="user-name">
+        David Park
+       </div>
+       <div class="user-referrals">
+        5 successful referrals
+       </div>
+      </div>
+      <div class="user-reward">
+       60% OFF
+      </div>
+     </div>
+     <div class="leaderboard-item">
+      <div class="rank other">
+       7
+      </div>
+      <div class="user-info">
+       <div class="user-name">
+        Lisa Johnson
+       </div>
+       <div class="user-referrals">
+        3 successful referrals
+       </div>
+      </div>
+      <div class="user-reward">
+       45% OFF
+      </div>
+     </div>
+     <div class="leaderboard-item">
+      <div class="rank other">
+       8
+      </div>
+      <div class="user-info">
+       <div class="user-name">
+        Michael Brown
+       </div>
+       <div class="user-referrals">
+        1 successful referral
+       </div>
+      </div>
+      <div class="user-reward">
+       30% OFF
+      </div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <script>
+        // Element SDK Configuration
+        const defaultConfig = {
+            page_title: "Invite & Earn",
+            launch_banner_text: "🎉 Launch Offer: 20% OFF + Earn Up to 60% Discount 🎉",
+            referral_code: "FOODIE2024",
+            copy_button_text: "Copy Code",
+            share_message: "Join me on Litterateur Cafe and get 20% off your first order!",
+            leaderboard_title: "Top Referrers This Month",
+            background_color: "#F8F9FA",
+            primary_color: "#1B4332",
+            accent_color: "#D4AF37",
+            text_color: "#2D3436",
+            surface_color: "#FFFFFF",
+            font_family: "Playfair Display",
+            font_size: 16
+        };
+
+        // Copy referral code functionality
+        function copyReferralCode() {
+            const referralCode = document.getElementById('referral-code').textContent;
+            const copyBtn = document.getElementById('copy-btn');
+            const copyBtnText = document.getElementById('copy-button-text');
+            
+            navigator.clipboard.writeText(referralCode).then(() => {
+                copyBtn.classList.add('copied');
+                copyBtnText.textContent = 'Copied!';
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtnText.textContent = defaultConfig.copy_button_text;
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = referralCode;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                copyBtn.classList.add('copied');
+                copyBtnText.textContent = 'Copied!';
+                
+                setTimeout(() => {
+                    copyBtn.classList.remove('copied');
+                    copyBtnText.textContent = defaultConfig.copy_button_text;
+                }, 2000);
+            });
+        }
+
+        // Share functionality
+        function shareOnWhatsApp() {
+            const message = encodeURIComponent(`${defaultConfig.share_message} Use code: ${defaultConfig.referral_code}`);
+            window.open(`https://wa.me/?text=${message}`, '_blank', 'noopener,noreferrer');
+        }
+
+        function shareOnInstagram() {
+            // Instagram doesn't support direct text sharing, so we'll copy to clipboard
+            const message = `${defaultConfig.share_message} Use code: ${defaultConfig.referral_code}`;
+            navigator.clipboard.writeText(message).then(() => {
+                alert('Message copied to clipboard! You can now paste it in your Instagram story or post.');
+            });
+        }
+
+        function shareOnFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            const quote = encodeURIComponent(`${defaultConfig.share_message} Use code: ${defaultConfig.referral_code}`);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`, '_blank', 'noopener,noreferrer');
+        }
+
+        function shareOnTwitter() {
+            const text = encodeURIComponent(`${defaultConfig.share_message} Use code: ${defaultConfig.referral_code}`);
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank', 'noopener,noreferrer');
+        }
+
+        function shareViaEmail() {
+            const subject = encodeURIComponent('Join Litterateur Cafe - Special Offer!');
+            const body = encodeURIComponent(`${defaultConfig.share_message}\n\nUse my referral code: ${defaultConfig.referral_code}\n\nJoin here: ${window.location.href}`);
+            window.open(`mailto:?subject=${subject}&body=${body}`, '_blank', 'noopener,noreferrer');
+        }
+
+        // Element SDK Functions
+        async function onConfigChange(config) {
+            // Update text content
+            const pageTitle = document.getElementById('page-title');
+            if (pageTitle) pageTitle.textContent = config.page_title || defaultConfig.page_title;
+            
+            const launchBannerText = document.getElementById('launch-banner-text');
+            if (launchBannerText) launchBannerText.textContent = config.launch_banner_text || defaultConfig.launch_banner_text;
+            
+            const referralCode = document.getElementById('referral-code');
+            if (referralCode) referralCode.textContent = config.referral_code || defaultConfig.referral_code;
+            
+            const copyButtonText = document.getElementById('copy-button-text');
+            if (copyButtonText) copyButtonText.textContent = config.copy_button_text || defaultConfig.copy_button_text;
+            
+            const leaderboardTitle = document.getElementById('leaderboard-title');
+            if (leaderboardTitle) leaderboardTitle.textContent = config.leaderboard_title || defaultConfig.leaderboard_title;
+
+            // Update colors
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+
+            document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, #E9ECEF 100%)`;
+            document.body.style.color = textColor;
+
+            // Update primary color elements
+            const hero = document.querySelector('.hero');
+            if (hero) hero.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+
+            // Update accent color elements
+            const launchBanner = document.querySelector('.launch-banner');
+            if (launchBanner) {
+                launchBanner.style.background = `linear-gradient(90deg, ${accentColor} 0%, ${accentColor}dd 50%, ${accentColor} 100%)`;
+            }
+
+            const stepCircles = document.querySelectorAll('.step-circle');
+            stepCircles.forEach(circle => {
+                circle.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)`;
+            });
+
+            const copyBtn = document.querySelector('.copy-btn');
+            if (copyBtn) copyBtn.style.backgroundColor = accentColor;
+
+            // Update surface color elements
+            const surfaceElements = document.querySelectorAll('.referral-code-container, .leaderboard-container, .leaderboard-item');
+            surfaceElements.forEach(el => {
+                el.style.backgroundColor = surfaceColor;
+            });
+
+            // Update font
+            const customFont = config.font_family || defaultConfig.font_family;
+            const titleElements = document.querySelectorAll('.hero-title, .section-title, .code-title, .share-title');
+            titleElements.forEach(el => {
+                el.style.fontFamily = `${customFont}, serif`;
+            });
+
+            // Update font size
+            const baseSize = config.font_size || defaultConfig.font_size;
+            document.documentElement.style.fontSize = `${baseSize}px`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.accent_color || defaultConfig.accent_color,
+                        set: (value) => {
+                            config.accent_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["page_title", config.page_title || defaultConfig.page_title],
+                ["launch_banner_text", config.launch_banner_text || defaultConfig.launch_banner_text],
+                ["referral_code", config.referral_code || defaultConfig.referral_code],
+                ["copy_button_text", config.copy_button_text || defaultConfig.copy_button_text],
+                ["share_message", config.share_message || defaultConfig.share_message],
+                ["leaderboard_title", config.leaderboard_title || defaultConfig.leaderboard_title]
+            ]);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange,
+                    mapToCapabilities,
+                    mapToEditPanelValues
+                });
+            }
+
+            // Add more confetti dynamically
+            function createConfetti() {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.animationDuration = (Math.random() * 1.5 + 2) + 's';
+                
+                const colors = ['#D4AF37', '#1B4332', '#E74C3C', '#27AE60', '#F4D03F'];
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 4000);
+            }
+
+            // Create confetti periodically
+            setInterval(createConfetti, 500);
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9967976ca74e59d8',t:'MTc2MTc5MjQ4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

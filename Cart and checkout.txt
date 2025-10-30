@@ -1,0 +1,1192 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart &amp; Checkout - Litterateur Cafe</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2D3436;
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+            height: 100%;
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: #F8F9FA;
+            padding: 32px 0;
+            text-align: center;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 30px rgba(27, 67, 50, 0.2);
+        }
+        
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            color: #D4AF37;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Main Layout */
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+        
+        /* Cart Summary - Left Column */
+        .cart-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 0;
+            border-bottom: 1px solid #F8F9FA;
+            transition: all 0.3s ease;
+        }
+        
+        .cart-item:hover {
+            background: #F8F9FA;
+            margin: 0 -16px;
+            padding: 20px 16px;
+            border-radius: 12px;
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .item-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+        }
+        
+        .item-details {
+            flex: 1;
+        }
+        
+        .item-name {
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 4px;
+            font-size: 18px;
+        }
+        
+        .item-description {
+            color: #6C757D;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .item-price {
+            font-weight: 700;
+            color: #D4AF37;
+            font-size: 16px;
+        }
+        
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #F8F9FA;
+            border-radius: 12px;
+            padding: 8px;
+        }
+        
+        .quantity-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            background: #1B4332;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quantity-btn:hover {
+            background: #2D5A3D;
+            transform: scale(1.1);
+        }
+        
+        .quantity-btn:disabled {
+            background: #CED4DA;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .quantity-display {
+            font-weight: 600;
+            color: #1B4332;
+            min-width: 24px;
+            text-align: center;
+        }
+        
+        .cart-summary {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 2px solid #E9ECEF;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+        
+        .summary-row.total {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1B4332;
+            padding-top: 16px;
+            border-top: 1px solid #E9ECEF;
+            margin-top: 16px;
+        }
+        
+        /* Order Details - Right Column */
+        .order-section {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #E9ECEF;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+        }
+        
+        .address-input {
+            position: relative;
+        }
+        
+        .address-input::before {
+            content: '🗺️';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 2;
+        }
+        
+        .address-input .form-input {
+            padding-right: 50px;
+        }
+        
+        .autocomplete-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #E9ECEF;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+        }
+        
+        .suggestion-item {
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            border-bottom: 1px solid #F8F9FA;
+        }
+        
+        .suggestion-item:hover {
+            background: #F8F9FA;
+        }
+        
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+        
+        .textarea {
+            min-height: 100px;
+            resize: vertical;
+            font-family: inherit;
+        }
+        
+        /* Time Slot Picker */
+        .time-slots {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .time-slot {
+            padding: 12px 16px;
+            border: 2px solid #E9ECEF;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            font-weight: 500;
+        }
+        
+        .time-slot:hover {
+            border-color: #D4AF37;
+            background: #FFF9E6;
+        }
+        
+        .time-slot.selected {
+            border-color: #D4AF37;
+            background: #D4AF37;
+            color: white;
+        }
+        
+        .time-slot.unavailable {
+            background: #F8F9FA;
+            color: #6C757D;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        
+        /* Discount Section */
+        .discount-section {
+            background: linear-gradient(135deg, #F8F9FA 0%, #E9ECEF 100%);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+        
+        .discount-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .discount-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 8px 0;
+        }
+        
+        .discount-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6C757D;
+        }
+        
+        .discount-amount {
+            font-weight: 600;
+            color: #27AE60;
+        }
+        
+        .total-savings {
+            border-top: 1px solid #CED4DA;
+            padding-top: 12px;
+            margin-top: 12px;
+            font-weight: 700;
+            color: #1B4332;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            border: 2px solid #E9ECEF;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        .payment-option:hover {
+            border-color: #D4AF37;
+            background: #FFF9E6;
+        }
+        
+        .payment-option.selected {
+            border-color: #D4AF37;
+            background: #FFF9E6;
+        }
+        
+        .payment-option.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #F8F9FA;
+        }
+        
+        .payment-radio {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #CED4DA;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-option.selected .payment-radio {
+            border-color: #D4AF37;
+        }
+        
+        .payment-option.selected .payment-radio::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background: #D4AF37;
+            border-radius: 50%;
+        }
+        
+        .payment-info {
+            flex: 1;
+        }
+        
+        .payment-name {
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 4px;
+        }
+        
+        .payment-description {
+            font-size: 14px;
+            color: #6C757D;
+        }
+        
+        .coming-soon {
+            background: #FFF3CD;
+            color: #856404;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        /* Grand Total */
+        .grand-total {
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+            text-align: center;
+        }
+        
+        .grand-total-label {
+            font-size: 18px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+        
+        .grand-total-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #D4AF37;
+        }
+        
+        /* Place Order Button */
+        .place-order-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+            color: #1B4332;
+            border: none;
+            padding: 20px 32px;
+            border-radius: 16px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+            animation: button-glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes button-glow {
+            0% { 
+                box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+                transform: scale(1);
+            }
+            100% { 
+                box-shadow: 0 12px 35px rgba(212, 175, 55, 0.5);
+                transform: scale(1.02);
+            }
+        }
+        
+        .place-order-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: button-shine 3s ease-in-out infinite;
+        }
+        
+        @keyframes button-shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+        
+        .place-order-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+        }
+        
+        .place-order-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            animation: none;
+            transform: none;
+        }
+        
+        .btn-text {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .loading-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid #1B4332;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Success Message */
+        .success-message {
+            background: #D1F2EB;
+            color: #27AE60;
+            padding: 16px 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+            animation: slide-down 0.3s ease-out;
+        }
+        
+        @keyframes slide-down {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .checkout-layout {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .page-title {
+                font-size: 32px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+            }
+            
+            .time-slots {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            
+            .item-image {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .quantity-controls {
+                align-self: flex-end;
+            }
+            
+            .grand-total-amount {
+                font-size: 28px;
+            }
+            
+            .place-order-btn {
+                font-size: 18px;
+                padding: 16px 24px;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body>
+  <div class="container"><!-- Header -->
+   <header class="header">
+    <h1 class="page-title" id="page-title">Cart &amp; Checkout</h1>
+   </header><!-- Success Message -->
+   <div class="success-message" id="success-message">
+    🎉 Order placed successfully! You'll receive a confirmation shortly.
+   </div><!-- Main Layout -->
+   <div class="checkout-layout"><!-- Left Column - Cart Summary -->
+    <div class="cart-section">
+     <h2 class="section-title">🛒 Your Order</h2>
+     <div class="cart-item">
+      <div class="item-image">
+       ☕
+      </div>
+      <div class="item-details">
+       <div class="item-name">
+        Artisan Coffee Blend
+       </div>
+       <div class="item-description">
+        Premium roasted coffee beans
+       </div>
+       <div class="item-price">
+        ₹299
+       </div>
+      </div>
+      <div class="quantity-controls"><button class="quantity-btn" onclick="updateQuantity(0, -1)">−</button> <span class="quantity-display" id="qty-0">2</span> <button class="quantity-btn" onclick="updateQuantity(0, 1)">+</button>
+      </div>
+     </div>
+     <div class="cart-item">
+      <div class="item-image">
+       🥐
+      </div>
+      <div class="item-details">
+       <div class="item-name">
+        French Croissant
+       </div>
+       <div class="item-description">
+        Buttery, flaky pastry
+       </div>
+       <div class="item-price">
+        ₹149
+       </div>
+      </div>
+      <div class="quantity-controls"><button class="quantity-btn" onclick="updateQuantity(1, -1)">−</button> <span class="quantity-display" id="qty-1">1</span> <button class="quantity-btn" onclick="updateQuantity(1, 1)">+</button>
+      </div>
+     </div>
+     <div class="cart-item">
+      <div class="item-image">
+       🍰
+      </div>
+      <div class="item-details">
+       <div class="item-name">
+        Chocolate Cake Slice
+       </div>
+       <div class="item-description">
+        Rich chocolate layer cake
+       </div>
+       <div class="item-price">
+        ₹199
+       </div>
+      </div>
+      <div class="quantity-controls"><button class="quantity-btn" onclick="updateQuantity(2, -1)">−</button> <span class="quantity-display" id="qty-2">1</span> <button class="quantity-btn" onclick="updateQuantity(2, 1)">+</button>
+      </div>
+     </div>
+     <div class="cart-summary">
+      <div class="summary-row"><span>Subtotal:</span> <span id="subtotal">₹946</span>
+      </div>
+      <div class="summary-row"><span>Delivery Fee:</span> <span>₹49</span>
+      </div>
+      <div class="summary-row"><span>Taxes:</span> <span id="taxes">₹95</span>
+      </div>
+      <div class="summary-row total"><span>Total:</span> <span id="cart-total">₹1,090</span>
+      </div>
+     </div>
+    </div><!-- Right Column - Order Details -->
+    <div class="order-section">
+     <h2 class="section-title">📋 Order Details</h2>
+     <form id="checkout-form" onsubmit="placeOrder(event)"><!-- Delivery Address -->
+      <div class="form-group"><label class="form-label" for="address" id="delivery-address-label">Delivery Address</label>
+       <div class="address-input"><input type="text" id="address" class="form-input" placeholder="Enter your delivery address" value="123 MG Road, Bangalore, Karnataka 560001" oninput="showAddressSuggestions(this.value)" required>
+        <div class="autocomplete-suggestions" id="address-suggestions"></div>
+       </div>
+      </div><!-- Phone Number -->
+      <div class="form-group"><label class="form-label" for="phone" id="phone-label">Phone Number</label> <input type="tel" id="phone" class="form-input" placeholder="Enter your phone number" value="+91 98765 43210" required>
+      </div><!-- Special Instructions -->
+      <div class="form-group"><label class="form-label" for="instructions" id="instructions-label">Special Instructions</label> <textarea id="instructions" class="form-input textarea" placeholder="Any special delivery instructions..."></textarea>
+      </div><!-- Delivery Time Slot -->
+      <div class="form-group"><label class="form-label" id="time-slot-label">Delivery Time</label>
+       <div class="time-slots">
+        <div class="time-slot" onclick="selectTimeSlot(this)">
+         <div>
+          Today
+         </div>
+         <div>
+          2:00 PM
+         </div>
+        </div>
+        <div class="time-slot selected" onclick="selectTimeSlot(this)">
+         <div>
+          Today
+         </div>
+         <div>
+          4:00 PM
+         </div>
+        </div>
+        <div class="time-slot" onclick="selectTimeSlot(this)">
+         <div>
+          Today
+         </div>
+         <div>
+          6:00 PM
+         </div>
+        </div>
+        <div class="time-slot" onclick="selectTimeSlot(this)">
+         <div>
+          Tomorrow
+         </div>
+         <div>
+          10:00 AM
+         </div>
+        </div>
+        <div class="time-slot" onclick="selectTimeSlot(this)">
+         <div>
+          Tomorrow
+         </div>
+         <div>
+          12:00 PM
+         </div>
+        </div>
+        <div class="time-slot unavailable">
+         <div>
+          Tomorrow
+         </div>
+         <div>
+          2:00 PM
+         </div>
+        </div>
+       </div>
+      </div><!-- Discount Display -->
+      <div class="discount-section">
+       <h3 class="discount-title">🎁 Applied Discounts</h3>
+       <div class="discount-item">
+        <div class="discount-label">
+         🚀 Launch Offer (20%)
+        </div>
+        <div class="discount-amount">
+         -₹218
+        </div>
+       </div>
+       <div class="discount-item">
+        <div class="discount-label">
+         👥 Referral Discount (5%)
+        </div>
+        <div class="discount-amount">
+         -₹55
+        </div>
+       </div>
+       <div class="discount-item">
+        <div class="discount-label">
+         🪙 Token Discount (3%)
+        </div>
+        <div class="discount-amount">
+         -₹33
+        </div>
+       </div>
+       <div class="discount-item total-savings">
+        <div class="discount-label">
+         💰 Total Savings
+        </div>
+        <div class="discount-amount">
+         -₹306
+        </div>
+       </div>
+      </div><!-- Grand Total -->
+      <div class="grand-total">
+       <div class="grand-total-label">
+        Grand Total
+       </div>
+       <div class="grand-total-amount" id="grand-total">
+        ₹784
+       </div>
+      </div><!-- Payment Method -->
+      <div class="form-group"><label class="form-label" id="payment-method-label">Payment Method</label>
+       <div class="payment-methods">
+        <div class="payment-option selected" onclick="selectPayment(this)">
+         <div class="payment-radio"></div>
+         <div class="payment-info">
+          <div class="payment-name">
+           💵 Cash on Delivery
+          </div>
+          <div class="payment-description">
+           Pay when your order arrives
+          </div>
+         </div>
+        </div>
+        <div class="payment-option" onclick="selectPayment(this)">
+         <div class="payment-radio"></div>
+         <div class="payment-info">
+          <div class="payment-name">
+           📱 UPI Payment
+          </div>
+          <div class="payment-description">
+           Pay instantly via UPI
+          </div>
+         </div>
+        </div>
+        <div class="payment-option disabled">
+         <div class="payment-radio"></div>
+         <div class="payment-info">
+          <div class="payment-name">
+           💳 Credit/Debit Cards
+          </div>
+          <div class="payment-description">
+           Secure card payments
+          </div>
+         </div>
+         <div class="coming-soon">
+          Coming Soon
+         </div>
+        </div>
+       </div>
+      </div><!-- Place Order Button --> <button type="submit" class="place-order-btn" id="place-order-btn">
+       <div class="btn-text"><span id="place-order-text">🛍️ Place Order</span>
+        <div class="loading-spinner" id="loading-spinner"></div>
+       </div></button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <script>
+        // Element SDK Configuration
+        const defaultConfig = {
+            page_title: "Cart & Checkout",
+            delivery_address_label: "Delivery Address",
+            phone_label: "Phone Number",
+            instructions_label: "Special Instructions",
+            time_slot_label: "Delivery Time",
+            payment_method_label: "Payment Method",
+            place_order_text: "🛍️ Place Order",
+            background_color: "#F8F9FA",
+            primary_color: "#1B4332",
+            accent_color: "#D4AF37",
+            text_color: "#2D3436",
+            surface_color: "#FFFFFF",
+            font_family: "Playfair Display",
+            font_size: 16
+        };
+
+        // Cart data
+        const cartItems = [
+            { name: "Artisan Coffee Blend", price: 299, quantity: 2 },
+            { name: "French Croissant", price: 149, quantity: 1 },
+            { name: "Chocolate Cake Slice", price: 199, quantity: 1 }
+        ];
+
+        // Address suggestions for autocomplete
+        const addressSuggestions = [
+            "123 MG Road, Bangalore, Karnataka 560001",
+            "456 Brigade Road, Bangalore, Karnataka 560025",
+            "789 Commercial Street, Bangalore, Karnataka 560001",
+            "321 Koramangala, Bangalore, Karnataka 560034",
+            "654 Indiranagar, Bangalore, Karnataka 560038"
+        ];
+
+        // Update quantity function
+        function updateQuantity(itemIndex, change) {
+            const currentQty = cartItems[itemIndex].quantity;
+            const newQty = Math.max(0, currentQty + change);
+            
+            if (newQty === 0) {
+                // Remove item from cart
+                cartItems.splice(itemIndex, 1);
+                location.reload(); // Simple reload for demo
+            } else {
+                cartItems[itemIndex].quantity = newQty;
+                document.getElementById(`qty-${itemIndex}`).textContent = newQty;
+                updateCartTotals();
+            }
+        }
+
+        // Update cart totals
+        function updateCartTotals() {
+            let subtotal = 0;
+            cartItems.forEach(item => {
+                subtotal += item.price * item.quantity;
+            });
+            
+            const deliveryFee = 49;
+            const taxes = Math.round(subtotal * 0.1);
+            const total = subtotal + deliveryFee + taxes;
+            
+            // Apply discounts
+            const launchDiscount = Math.round(total * 0.2);
+            const referralDiscount = Math.round(total * 0.05);
+            const tokenDiscount = Math.round(total * 0.03);
+            const totalDiscounts = launchDiscount + referralDiscount + tokenDiscount;
+            const grandTotal = total - totalDiscounts;
+            
+            document.getElementById('subtotal').textContent = `₹${subtotal.toLocaleString()}`;
+            document.getElementById('taxes').textContent = `₹${taxes}`;
+            document.getElementById('cart-total').textContent = `₹${total.toLocaleString()}`;
+            document.getElementById('grand-total').textContent = `₹${grandTotal.toLocaleString()}`;
+        }
+
+        // Address autocomplete
+        function showAddressSuggestions(value) {
+            const suggestionsDiv = document.getElementById('address-suggestions');
+            
+            if (value.length < 2) {
+                suggestionsDiv.style.display = 'none';
+                return;
+            }
+            
+            const filteredSuggestions = addressSuggestions.filter(addr => 
+                addr.toLowerCase().includes(value.toLowerCase())
+            );
+            
+            if (filteredSuggestions.length > 0) {
+                suggestionsDiv.innerHTML = filteredSuggestions
+                    .map(addr => `<div class="suggestion-item" onclick="selectAddress('${addr}')">${addr}</div>`)
+                    .join('');
+                suggestionsDiv.style.display = 'block';
+            } else {
+                suggestionsDiv.style.display = 'none';
+            }
+        }
+
+        function selectAddress(address) {
+            document.getElementById('address').value = address;
+            document.getElementById('address-suggestions').style.display = 'none';
+        }
+
+        // Time slot selection
+        function selectTimeSlot(element) {
+            if (element.classList.contains('unavailable')) return;
+            
+            document.querySelectorAll('.time-slot').forEach(slot => {
+                slot.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        // Payment method selection
+        function selectPayment(element) {
+            if (element.classList.contains('disabled')) return;
+            
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        // Place order function
+        function placeOrder(event) {
+            event.preventDefault();
+            
+            const placeOrderBtn = document.getElementById('place-order-btn');
+            const btnText = document.getElementById('place-order-text');
+            const loadingSpinner = document.getElementById('loading-spinner');
+            const successMessage = document.getElementById('success-message');
+            
+            // Show loading state
+            placeOrderBtn.disabled = true;
+            btnText.style.display = 'none';
+            loadingSpinner.style.display = 'block';
+            
+            // Simulate order processing
+            setTimeout(() => {
+                // Hide loading state
+                placeOrderBtn.disabled = false;
+                btnText.style.display = 'flex';
+                loadingSpinner.style.display = 'none';
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                
+                // Scroll to top to show success message
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }, 2000);
+        }
+
+        // Hide address suggestions when clicking outside
+        document.addEventListener('click', function(event) {
+            const addressInput = document.getElementById('address');
+            const suggestionsDiv = document.getElementById('address-suggestions');
+            
+            if (!addressInput.contains(event.target) && !suggestionsDiv.contains(event.target)) {
+                suggestionsDiv.style.display = 'none';
+            }
+        });
+
+        // Element SDK Functions
+        async function onConfigChange(config) {
+            // Update text content
+            const pageTitle = document.getElementById('page-title');
+            if (pageTitle) pageTitle.textContent = config.page_title || defaultConfig.page_title;
+            
+            const deliveryAddressLabel = document.getElementById('delivery-address-label');
+            if (deliveryAddressLabel) deliveryAddressLabel.textContent = config.delivery_address_label || defaultConfig.delivery_address_label;
+            
+            const phoneLabel = document.getElementById('phone-label');
+            if (phoneLabel) phoneLabel.textContent = config.phone_label || defaultConfig.phone_label;
+            
+            const instructionsLabel = document.getElementById('instructions-label');
+            if (instructionsLabel) instructionsLabel.textContent = config.instructions_label || defaultConfig.instructions_label;
+            
+            const timeSlotLabel = document.getElementById('time-slot-label');
+            if (timeSlotLabel) timeSlotLabel.textContent = config.time_slot_label || defaultConfig.time_slot_label;
+            
+            const paymentMethodLabel = document.getElementById('payment-method-label');
+            if (paymentMethodLabel) paymentMethodLabel.textContent = config.payment_method_label || defaultConfig.payment_method_label;
+            
+            const placeOrderText = document.getElementById('place-order-text');
+            if (placeOrderText) placeOrderText.textContent = config.place_order_text || defaultConfig.place_order_text;
+
+            // Update colors
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+
+            document.body.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, #E9ECEF 100%)`;
+            document.body.style.color = textColor;
+
+            // Update primary color elements
+            const header = document.querySelector('.header');
+            if (header) header.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+
+            const grandTotal = document.querySelector('.grand-total');
+            if (grandTotal) grandTotal.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+
+            const quantityBtns = document.querySelectorAll('.quantity-btn');
+            quantityBtns.forEach(btn => {
+                btn.style.backgroundColor = primaryColor;
+            });
+
+            // Update accent color elements
+            const placeOrderBtn = document.querySelector('.place-order-btn');
+            if (placeOrderBtn) {
+                placeOrderBtn.style.background = `linear-gradient(135deg, ${accentColor} 0%, ${accentColor}dd 100%)`;
+            }
+
+            // Update surface color elements
+            const surfaceElements = document.querySelectorAll('.cart-section, .order-section');
+            surfaceElements.forEach(el => {
+                el.style.backgroundColor = surfaceColor;
+            });
+
+            // Update font
+            const customFont = config.font_family || defaultConfig.font_family;
+            const titleElements = document.querySelectorAll('.page-title, .section-title, .discount-title');
+            titleElements.forEach(el => {
+                el.style.fontFamily = `${customFont}, serif`;
+            });
+
+            // Update font size
+            const baseSize = config.font_size || defaultConfig.font_size;
+            document.documentElement.style.fontSize = `${baseSize}px`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.accent_color || defaultConfig.accent_color,
+                        set: (value) => {
+                            config.accent_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["page_title", config.page_title || defaultConfig.page_title],
+                ["delivery_address_label", config.delivery_address_label || defaultConfig.delivery_address_label],
+                ["phone_label", config.phone_label || defaultConfig.phone_label],
+                ["instructions_label", config.instructions_label || defaultConfig.instructions_label],
+                ["time_slot_label", config.time_slot_label || defaultConfig.time_slot_label],
+                ["payment_method_label", config.payment_method_label || defaultConfig.payment_method_label],
+                ["place_order_text", config.place_order_text || defaultConfig.place_order_text]
+            ]);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange,
+                    mapToCapabilities,
+                    mapToEditPanelValues
+                });
+            }
+
+            // Initial cart totals calculation
+            updateCartTotals();
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9967a298c5ea59d8',t:'MTc2MTc5Mjk0MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

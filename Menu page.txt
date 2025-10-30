@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Menu - Litterateur Cafe</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #2D3436;
+            background: #F8F9FA;
+            height: 100%;
+            padding-top: 80px;
+        }
+        
+        html {
+            height: 100%;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: #F8F9FA;
+            padding: 24px 0;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(27, 67, 50, 0.2);
+        }
+        
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .page-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Floating Cart */
+        .floating-cart {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            background: #D4AF37;
+            color: #1B4332;
+            border: none;
+            border-radius: 50px;
+            padding: 16px 24px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .floating-cart:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+        }
+        
+        .cart-count {
+            background: #1B4332;
+            color: #F8F9FA;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        
+        /* Category Tabs */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+        
+        .category-tab {
+            background: white;
+            border: 2px solid #E9ECEF;
+            color: #6C757D;
+            padding: 12px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        
+        .category-tab:hover {
+            border-color: #D4AF37;
+            color: #1B4332;
+        }
+        
+        .category-tab.active {
+            background: #D4AF37;
+            border-color: #D4AF37;
+            color: #1B4332;
+            font-weight: 600;
+        }
+        
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+        
+        .menu-item {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .menu-item.hidden {
+            display: none;
+        }
+        
+        /* Badges */
+        .badges {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            z-index: 10;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        
+        .badge.bestseller {
+            background: #E74C3C;
+            color: white;
+        }
+        
+        .badge.new {
+            background: #27AE60;
+            color: white;
+        }
+        
+        /* Menu Image */
+        .menu-image {
+            height: 200px;
+            background: linear-gradient(45deg, #D4AF37, #F4D03F);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1B4332;
+            font-weight: 600;
+            font-size: 18px;
+            position: relative;
+        }
+        
+        /* Menu Content */
+        .menu-content {
+            padding: 24px;
+        }
+        
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .menu-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #1B4332;
+            flex: 1;
+        }
+        
+        .menu-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #D4AF37;
+            margin-left: 16px;
+        }
+        
+        .menu-description {
+            color: #6C757D;
+            margin-bottom: 16px;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .dietary-icons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .dietary-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            background: #F8F9FA;
+            border: 2px solid #E9ECEF;
+        }
+        
+        .dietary-icon.vegan {
+            background: #E8F5E8;
+            border-color: #27AE60;
+            color: #27AE60;
+        }
+        
+        .dietary-icon.gluten-free {
+            background: #FFF3CD;
+            border-color: #F39C12;
+            color: #F39C12;
+        }
+        
+        .dietary-icon.spicy {
+            background: #FADBD8;
+            border-color: #E74C3C;
+            color: #E74C3C;
+        }
+        
+        .add-to-cart-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #1B4332 0%, #2D5A3D 100%);
+            color: #F8F9FA;
+            border: none;
+            border-radius: 12px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(27, 67, 50, 0.2);
+        }
+        
+        .add-to-cart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(27, 67, 50, 0.3);
+        }
+        
+        /* Cart Modal */
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 24px;
+        }
+        
+        .cart-modal.show {
+            display: flex;
+        }
+        
+        .cart-content {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 80%;
+            overflow-y: auto;
+        }
+        
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .cart-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #1B4332;
+        }
+        
+        .close-cart {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #6C757D;
+            padding: 4px;
+        }
+        
+        .cart-items {
+            margin-bottom: 24px;
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #E9ECEF;
+        }
+        
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: 600;
+            color: #1B4332;
+            margin-bottom: 4px;
+        }
+        
+        .cart-item-price {
+            color: #D4AF37;
+            font-weight: 600;
+        }
+        
+        .cart-total {
+            text-align: center;
+            padding-top: 24px;
+            border-top: 2px solid #E9ECEF;
+        }
+        
+        .total-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1B4332;
+            margin-bottom: 16px;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            background: #D4AF37;
+            color: #1B4332;
+            border: none;
+            border-radius: 12px;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-btn:hover {
+            background: #F4D03F;
+            transform: translateY(-2px);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            color: #6C757D;
+            font-style: italic;
+            padding: 40px 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 32px;
+            }
+            
+            .category-tabs {
+                gap: 4px;
+            }
+            
+            .category-tab {
+                padding: 10px 16px;
+                font-size: 14px;
+            }
+            
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .floating-cart {
+                top: 16px;
+                right: 16px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+            
+            .cart-content {
+                padding: 24px;
+                margin: 16px;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
+ </head>
+ <body><!-- Header -->
+  <header class="header">
+   <div class="container">
+    <h1 class="page-title" id="page-title">Our Menu</h1>
+    <p class="page-subtitle">Curated culinary experiences crafted with passion</p>
+   </div>
+  </header><!-- Floating Cart --> <button class="floating-cart" onclick="toggleCart()" aria-label="View shopping cart"> <span>🛒</span> <span id="cart-text">Cart</span> <span class="cart-count" id="cart-count">0</span> </button> <!-- Main Content -->
+  <main class="container"><!-- Category Tabs -->
+   <div class="category-tabs"><button class="category-tab active" data-category="all">All Items</button> <button class="category-tab" data-category="breakfast">Breakfast</button> <button class="category-tab" data-category="lunch">Lunch</button> <button class="category-tab" data-category="dinner">Dinner</button> <button class="category-tab" data-category="beverages">Beverages</button> <button class="category-tab" data-category="desserts">Desserts</button> <button class="category-tab" data-category="specials">Specials</button>
+   </div><!-- Menu Grid -->
+   <div class="menu-grid" id="menu-grid"><!-- Breakfast Items -->
+    <div class="menu-item" data-category="breakfast">
+     <div class="badges"><span class="badge bestseller">Bestseller</span>
+     </div>
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Artisan Breakfast</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Truffle Scrambled Eggs</h3><span class="menu-price">$18</span>
+      </div>
+      <p class="menu-description">Creamy scrambled eggs with black truffle shavings, served with artisan sourdough and seasonal microgreens</p>
+      <div class="dietary-icons"><span class="dietary-icon gluten-free" title="Gluten-free option available">🌾</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Truffle Scrambled Eggs', 18)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div>
+    <div class="menu-item" data-category="breakfast">
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Fresh Pastry</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Avocado Toast Supreme</h3><span class="menu-price">$14</span>
+      </div>
+      <p class="menu-description">Smashed avocado on multigrain bread with heirloom tomatoes, feta cheese, and everything bagel seasoning</p>
+      <div class="dietary-icons"><span class="dietary-icon vegan" title="Vegan">🌱</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Avocado Toast Supreme', 14)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div><!-- Lunch Items -->
+    <div class="menu-item" data-category="lunch">
+     <div class="badges"><span class="badge new">New</span>
+     </div>
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Gourmet Lunch</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Mediterranean Bowl</h3><span class="menu-price">$22</span>
+      </div>
+      <p class="menu-description">Quinoa bowl with grilled halloumi, roasted vegetables, olives, and tahini dressing</p>
+      <div class="dietary-icons"><span class="dietary-icon vegan" title="Vegan">🌱</span> <span class="dietary-icon gluten-free" title="Gluten-free">🌾</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Mediterranean Bowl', 22)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div>
+    <div class="menu-item" data-category="lunch">
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Artisan Sandwich</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Wagyu Burger Deluxe</h3><span class="menu-price">$28</span>
+      </div>
+      <p class="menu-description">Premium wagyu beef patty with aged cheddar, caramelized onions, and truffle aioli on brioche bun</p>
+      <div class="dietary-icons"><span class="dietary-icon spicy" title="Spicy">🌶️</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Wagyu Burger Deluxe', 28)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div><!-- Dinner Items -->
+    <div class="menu-item" data-category="dinner">
+     <div class="badges"><span class="badge bestseller">Bestseller</span>
+     </div>
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Fine Dining</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Lobster Risotto</h3><span class="menu-price">$42</span>
+      </div>
+      <p class="menu-description">Creamy arborio rice with fresh lobster, saffron, and microgreens, finished with parmesan and white wine</p>
+      <div class="dietary-icons"><span class="dietary-icon gluten-free" title="Gluten-free">🌾</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Lobster Risotto', 42)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div>
+    <div class="menu-item" data-category="dinner">
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Premium Steak</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Dry-Aged Ribeye</h3><span class="menu-price">$48</span>
+      </div>
+      <p class="menu-description">28-day dry-aged ribeye with roasted bone marrow, seasonal vegetables, and red wine jus</p>
+      <div class="dietary-icons"><span class="dietary-icon spicy" title="Spicy seasoning">🌶️</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Dry-Aged Ribeye', 48)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div><!-- Beverages -->
+    <div class="menu-item" data-category="beverages">
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Artisan Coffee</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Literary Blend Coffee</h3><span class="menu-price">$8</span>
+      </div>
+      <p class="menu-description">Single-origin Ethiopian beans with notes of chocolate and citrus, perfectly roasted in-house</p>
+      <div class="dietary-icons"><span class="dietary-icon vegan" title="Vegan">🌱</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Literary Blend Coffee', 8)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div>
+    <div class="menu-item" data-category="beverages">
+     <div class="badges"><span class="badge new">New</span>
+     </div>
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Craft Cocktail</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Golden Hour Mocktail</h3><span class="menu-price">$12</span>
+      </div>
+      <p class="menu-description">Refreshing blend of passion fruit, ginger, and sparkling water with gold leaf garnish</p>
+      <div class="dietary-icons"><span class="dietary-icon vegan" title="Vegan">🌱</span> <span class="dietary-icon gluten-free" title="Gluten-free">🌾</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Golden Hour Mocktail', 12)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div><!-- Desserts -->
+    <div class="menu-item" data-category="desserts">
+     <div class="badges"><span class="badge bestseller">Bestseller</span>
+     </div>
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Signature Dessert</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Poet's Chocolate Soufflé</h3><span class="menu-price">$16</span>
+      </div>
+      <p class="menu-description">Warm chocolate soufflé with vanilla bean ice cream and gold leaf garnish, served tableside</p>
+      <div class="dietary-icons"><span class="dietary-icon gluten-free" title="Gluten-free option">🌾</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Poet\'s Chocolate Soufflé', 16)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div>
+    <div class="menu-item" data-category="desserts">
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>French Pastry</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Lavender Crème Brûlée</h3><span class="menu-price">$14</span>
+      </div>
+      <p class="menu-description">Classic French custard infused with lavender honey, topped with caramelized sugar and fresh berries</p>
+      <div class="dietary-icons"><span class="dietary-icon gluten-free" title="Gluten-free">🌾</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Lavender Crème Brûlée', 14)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div><!-- Specials -->
+    <div class="menu-item" data-category="specials">
+     <div class="badges"><span class="badge new">New</span> <span class="badge bestseller">Bestseller</span>
+     </div>
+     <div class="menu-image"><img src="" alt="Food image" style="display:none;" onerror="this.style.display='none';"> <span>Chef's Special</span>
+     </div>
+     <div class="menu-content">
+      <div class="menu-header">
+       <h3 class="menu-title">Tasting Menu Experience</h3><span class="menu-price">$85</span>
+      </div>
+      <p class="menu-description">Seven-course chef's tasting menu featuring seasonal ingredients and wine pairings</p>
+      <div class="dietary-icons"><span class="dietary-icon vegan" title="Vegan options available">🌱</span> <span class="dietary-icon gluten-free" title="Gluten-free options">🌾</span>
+      </div><button class="add-to-cart-btn" onclick="addToCart('Tasting Menu Experience', 85)"> <span id="add-to-cart-text">Add to Cart</span> </button>
+     </div>
+    </div>
+   </div>
+  </main><!-- Cart Modal -->
+  <div class="cart-modal" id="cart-modal">
+   <div class="cart-content">
+    <div class="cart-header">
+     <h2 class="cart-title" id="view-cart-text">View Cart</h2><button class="close-cart" onclick="toggleCart()" aria-label="Close cart">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+     <div class="empty-cart" id="empty-cart-text">
+      Your cart is empty
+     </div>
+    </div>
+    <div class="cart-total" id="cart-total" style="display: none;">
+     <div class="total-amount">
+      Total: $<span id="total-amount">0</span>
+     </div><button class="checkout-btn">Proceed to Checkout</button>
+    </div>
+   </div>
+  </div>
+  <script>
+        // Element SDK Configuration
+        const defaultConfig = {
+            page_title: "Our Menu",
+            cart_text: "Cart",
+            add_to_cart_text: "Add to Cart",
+            view_cart_text: "View Cart",
+            empty_cart_text: "Your cart is empty",
+            background_color: "#F8F9FA",
+            primary_color: "#1B4332",
+            accent_color: "#D4AF37",
+            text_color: "#2D3436",
+            surface_color: "#FFFFFF",
+            font_family: "Playfair Display",
+            font_size: 16
+        };
+
+        // Cart functionality
+        let cart = [];
+        let cartTotal = 0;
+
+        function addToCart(itemName, price) {
+            cart.push({ name: itemName, price: price });
+            cartTotal += price;
+            updateCartDisplay();
+            
+            // Show success feedback
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = 'Added!';
+            button.style.background = '#27AE60';
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.style.background = '';
+            }, 1000);
+        }
+
+        function updateCartDisplay() {
+            const cartCount = document.getElementById('cart-count');
+            const cartItems = document.getElementById('cart-items');
+            const cartTotalSection = document.getElementById('cart-total');
+            const totalAmount = document.getElementById('total-amount');
+            const emptyCartText = document.getElementById('empty-cart-text');
+
+            cartCount.textContent = cart.length;
+
+            if (cart.length === 0) {
+                emptyCartText.style.display = 'block';
+                cartTotalSection.style.display = 'none';
+                cartItems.innerHTML = '<div class="empty-cart" id="empty-cart-text">Your cart is empty</div>';
+            } else {
+                emptyCartText.style.display = 'none';
+                cartTotalSection.style.display = 'block';
+                
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price}</div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                totalAmount.textContent = cartTotal.toFixed(2);
+            }
+        }
+
+        function toggleCart() {
+            const cartModal = document.getElementById('cart-modal');
+            cartModal.classList.toggle('show');
+        }
+
+        // Category filtering
+        function filterMenu(category) {
+            const menuItems = document.querySelectorAll('.menu-item');
+            const tabs = document.querySelectorAll('.category-tab');
+
+            // Update active tab
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.category === category) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Filter items
+            menuItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        }
+
+        // Element SDK Functions
+        async function onConfigChange(config) {
+            // Update text content
+            const pageTitle = document.getElementById('page-title');
+            if (pageTitle) pageTitle.textContent = config.page_title || defaultConfig.page_title;
+            
+            const cartText = document.getElementById('cart-text');
+            if (cartText) cartText.textContent = config.cart_text || defaultConfig.cart_text;
+            
+            const viewCartText = document.getElementById('view-cart-text');
+            if (viewCartText) viewCartText.textContent = config.view_cart_text || defaultConfig.view_cart_text;
+            
+            const emptyCartText = document.getElementById('empty-cart-text');
+            if (emptyCartText) emptyCartText.textContent = config.empty_cart_text || defaultConfig.empty_cart_text;
+
+            // Update all "Add to Cart" buttons
+            const addToCartButtons = document.querySelectorAll('#add-to-cart-text');
+            addToCartButtons.forEach(btn => {
+                btn.textContent = config.add_to_cart_text || defaultConfig.add_to_cart_text;
+            });
+
+            // Update colors
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const primaryColor = config.primary_color || defaultConfig.primary_color;
+            const accentColor = config.accent_color || defaultConfig.accent_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+
+            document.body.style.backgroundColor = backgroundColor;
+            document.body.style.color = textColor;
+
+            // Update primary color elements
+            const header = document.querySelector('.header');
+            if (header) header.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+
+            const addToCartBtns = document.querySelectorAll('.add-to-cart-btn');
+            addToCartBtns.forEach(btn => {
+                btn.style.background = `linear-gradient(135deg, ${primaryColor} 0%, ${primaryColor}dd 100%)`;
+            });
+
+            // Update accent color elements
+            const floatingCart = document.querySelector('.floating-cart');
+            if (floatingCart) floatingCart.style.backgroundColor = accentColor;
+
+            const activeTab = document.querySelector('.category-tab.active');
+            if (activeTab) {
+                activeTab.style.backgroundColor = accentColor;
+                activeTab.style.borderColor = accentColor;
+            }
+
+            const checkoutBtn = document.querySelector('.checkout-btn');
+            if (checkoutBtn) checkoutBtn.style.backgroundColor = accentColor;
+
+            // Update surface color elements
+            const surfaceElements = document.querySelectorAll('.menu-item, .cart-content');
+            surfaceElements.forEach(el => {
+                el.style.backgroundColor = surfaceColor;
+            });
+
+            // Update font
+            const customFont = config.font_family || defaultConfig.font_family;
+            const titleElements = document.querySelectorAll('.page-title, .menu-title, .cart-title');
+            titleElements.forEach(el => {
+                el.style.fontFamily = `${customFont}, serif`;
+            });
+
+            // Update font size
+            const baseSize = config.font_size || defaultConfig.font_size;
+            document.documentElement.style.fontSize = `${baseSize}px`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_color || defaultConfig.primary_color,
+                        set: (value) => {
+                            config.primary_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ primary_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.accent_color || defaultConfig.accent_color,
+                        set: (value) => {
+                            config.accent_color = value;
+                            if (window.elementSdk) window.elementSdk.setConfig({ accent_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        if (window.elementSdk) window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["page_title", config.page_title || defaultConfig.page_title],
+                ["cart_text", config.cart_text || defaultConfig.cart_text],
+                ["add_to_cart_text", config.add_to_cart_text || defaultConfig.add_to_cart_text],
+                ["view_cart_text", config.view_cart_text || defaultConfig.view_cart_text],
+                ["empty_cart_text", config.empty_cart_text || defaultConfig.empty_cart_text]
+            ]);
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize Element SDK
+            if (window.elementSdk) {
+                window.elementSdk.init({
+                    defaultConfig,
+                    onConfigChange,
+                    mapToCapabilities,
+                    mapToEditPanelValues
+                });
+            }
+
+            // Add event listeners for category tabs
+            document.querySelectorAll('.category-tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    filterMenu(tab.dataset.category);
+                });
+            });
+
+            // Close cart when clicking outside
+            document.getElementById('cart-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    toggleCart();
+                }
+            });
+
+            // Initialize cart display
+            updateCartDisplay();
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9967930f80de59d8',t:'MTc2MTc5MjMwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
