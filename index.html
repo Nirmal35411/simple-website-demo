@@ -1,294 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Litterateur Cafe - Home</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Litterateur Cafe - Luxury Food Delivery</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {font-family: 'Montserrat', Arial, sans-serif; background: #faf6f4; margin: 0;}
+    nav {background: #101820; color: #fff; padding: 1rem 0; text-align: center; font-weight: 600;}
+    nav a {color: #ebc934; text-decoration: none; margin: 0 16px;}
+    .hero {background: linear-gradient(110deg, #ebc934 70%, #f3e7d8 100%); padding: 60px 0; text-align: center;}
+    .hero-title {font-size: 3em; margin-bottom: 0.2em; font-weight: 900; color: #101820;}
+    .hero-subtitle {font-size: 1.4em; color: #6F4436; font-weight: 500; margin-bottom: 1rem;}
+    .hero-description {color: #363636; font-size: 1em; margin-bottom: 2em;}
+    .hero-buttons {margin-top: 2em;}
+    .btn {padding: 1em 2em; border-radius: 35px; font-weight: 700; font-size: 1em; background: #101820; color: #fff; border: none; cursor: pointer; transition: 0.2s;}
+    .btn-secondary {background: #ebc934; color: #101820;}
+    section {padding: 3em 1em; max-width: 900px; margin: auto;}
+    h2 {color: #101820;}
+    .menu-preview, .rewards-preview, .reviews-preview {display: flex; gap: 32px; flex-wrap: wrap;}
+    .card {background: #fff; padding: 2em; border-radius: 20px; box-shadow: 0 3px 16px rgba(0,0,0,0.09);}
+    .footer {background: #323232; color: #ebc934; padding: 2em 0; text-align: center; font-size: 1em;}
+  </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">
-                <h1>Litterateur Cafe</h1>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link active">Home</a></li>
-                <li><a href="Token rewards page.html" class="nav-link">Rewards</a></li>
-                <li><a href="Cart and checkout.html" class="nav-link">Cart</a></li>
-                <li><a href="login page.html" class="nav-link">Login</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1 class="hero-title">Welcome to Litterateur Cafe</h1>
-            <p class="hero-subtitle">Where Literature Meets Great Coffee</p>
-            <p class="hero-description">Experience the perfect blend of artisan coffee, delicious pastries, and a cozy literary atmosphere. Your favorite books and beverages await.</p>
-            <div class="hero-buttons">
-                <a href="Token rewards page.html" class="btn btn-secondary">Join Rewards</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Menu Section -->
-    <section class="menu" id="menu">
-        <div class="menu-container">
-            <h2 class="menu-title">Our Menu</h2>
-            <p class="menu-subtitle">Explore our selection of premium coffees, teas, and fresh pastries</p>
-            
-            <!-- Coffee Menu -->
-            <div class="menu-category">
-                <h3 class="category-title">☕ Coffee</h3>
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Espresso</h4>
-                            <p class="item-description">Rich and bold single shot</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$3.50</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Cappuccino</h4>
-                            <p class="item-description">Espresso with steamed milk and foam</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$4.50</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Latte</h4>
-                            <p class="item-description">Smooth espresso with steamed milk</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$4.75</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Americano</h4>
-                            <p class="item-description">Espresso with hot water</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$3.75</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Mocha</h4>
-                            <p class="item-description">Espresso with chocolate and steamed milk</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$5.25</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Cold Brew</h4>
-                            <p class="item-description">Smooth, refreshing cold coffee</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$4.25</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Tea Menu -->
-            <div class="menu-category">
-                <h3 class="category-title">🍵 Tea</h3>
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">English Breakfast</h4>
-                            <p class="item-description">Classic black tea blend</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$3.25</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Green Tea</h4>
-                            <p class="item-description">Light and refreshing</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$3.25</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Chai Latte</h4>
-                            <p class="item-description">Spiced tea with steamed milk</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$4.50</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Earl Grey</h4>
-                            <p class="item-description">Black tea with bergamot</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$3.25</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Herbal Tea</h4>
-                            <p class="item-description">Caffeine-free selection</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$3.50</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Pastries Menu -->
-            <div class="menu-category">
-                <h3 class="category-title">🥐 Pastries & Treats</h3>
-                <div class="menu-items">
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Croissant</h4>
-                            <p class="item-description">Buttery and flaky French pastry</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$3.75</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Blueberry Muffin</h4>
-                            <p class="item-description">Fresh baked with real blueberries</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$3.50</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Chocolate Cake</h4>
-                            <p class="item-description">Rich and moist chocolate slice</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$4.75</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Cinnamon Roll</h4>
-                            <p class="item-description">Warm with cream cheese frosting</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$4.25</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Scone</h4>
-                            <p class="item-description">Traditional British tea pastry</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$3.25</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                    <div class="menu-item">
-                        <div class="item-info">
-                            <h4 class="item-name">Cheesecake</h4>
-                            <p class="item-description">Creamy New York style</p>
-                        </div>
-                        <div class="item-actions">
-                            <span class="item-price">$5.50</span>
-                            <button class="btn-add-cart">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features Section -->
-    <section class="features">
-        <div class="features-container">
-            <div class="feature-card">
-                <h3>📚 Reading Nook</h3>
-                <p>Cozy corners with curated book collections for your reading pleasure</p>
-            </div>
-            <div class="feature-card">
-                <h3>☕ Artisan Coffee</h3>
-                <p>Premium coffee beans roasted to perfection, served by expert baristas</p>
-            </div>
-            <div class="feature-card">
-                <h3>🍰 Fresh Pastries</h3>
-                <p>Homemade treats and pastries baked daily with love and care</p>
-            </div>
-            <div class="feature-card">
-                <h3>🎁 Rewards Program</h3>
-                <p>Earn tokens with every purchase and unlock exclusive benefits</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about">
-        <div class="about-container">
-            <h2>About Litterateur Cafe</h2>
-            <p>Founded with a passion for literature and coffee, Litterateur Cafe is more than just a coffee shop - it's a community hub for book lovers, writers, and coffee enthusiasts. We believe that great conversations start with great coffee and good books.</p>
-            <p>Visit us today and discover your new favorite spot to read, write, or simply relax with a cup of our finest brew.</p>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h3>Litterateur Cafe</h3>
-                <p>Your literary coffee destination</p>
-            </div>
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="Token rewards page.html">Rewards</a></li>
-                    <li><a href="login page.html">Account</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>Contact</h4>
-                <p>Email: info@litterateurcafe.com</p>
-                <p>Phone: (555) 123-4567</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2025 Litterateur Cafe. All rights reserved.</p>
-        </div>
-    </footer>
-
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="Homepage.html">Home</a> |
+    <a href="Menu page.html">Menu</a> |
+    <a href="login page.html">Login / Signup</a> |
+    <a href="referral rewards page.html">Referral Rewards</a> |
+    <a href="Token rewards page.html">Token Rewards</a> |
+    <a href="Cart and checkout.html">Cart & Checkout</a> |
+    <a href="user dashboard.html">User Dashboard</a> |
+    <a href="Admin Page.html">Admin Dashboard</a> |
+    <a href="KDS.html">Kitchen Display</a> |
+    <a href="Delivery partner.html">Delivery Partner</a>
+  </nav>
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-title">Litterateur Cafe</div>
+    <div class="hero-subtitle">Where Every Bite Tells a Story</div>
+    <div class="hero-description">
+      Luxury dining delivered to you. Enjoy our chef-crafted menu, world-class coffee blends, and rewards with every order!
+    </div>
+    <div class="hero-buttons">
+      <a class="btn" href="Menu page.html">Order Now</a>
+      <a class="btn btn-secondary" href="Token rewards page.html">Join Rewards</a>
+    </div>
+  </div>
+  <section>
+    <h2>Featured Menu</h2>
+    <div class="menu-preview">
+      <div class="card">
+        <strong>Truffle Risotto Supreme</strong><br />
+        Creamy arborio rice, black truffle shavings, wild mushrooms<br />
+        <span style="font-weight:600;color:#ebc934;">₹499</span>
+      </div>
+      <div class="card">
+        <strong>Literary Blend Coffee</strong><br />
+        Ethiopian beans, notes of chocolate and citrus<br />
+        <span style="font-weight:600;color:#ebc934;">₹199</span>
+      </div>
+      <div class="card">
+        <strong>Poet's Chocolate Soufflé</strong><br />
+        Warm chocolate soufflé, vanilla bean ice cream<br />
+        <span style="font-weight:600;color:#ebc934;">₹299</span>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>How It Works</h2>
+    <div class="rewards-preview">
+      <div class="card">
+        <strong>Referral Rewards</strong><br />Share our cafe, earn up to 60% off!
+      </div>
+      <div class="card">
+        <strong>Token Rewards</strong><br />Collect tokens on every order, unlock discounts & gifts.
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>What Our Customers Say</h2>
+    <div class="reviews-preview">
+      <div class="card">
+        ⭐⭐⭐⭐⭐<br />"Exceptional! Truffle risotto was 10/10."<br /><span>- Sarah M.</span>
+      </div>
+      <div class="card">
+        ⭐⭐⭐⭐⭐<br />"Coffee is perfection. Delivery was fast!"<br /><span>- James L.</span>
+      </div>
+      <div class="card">
+        ⭐⭐⭐⭐⭐<br />"Every meal tells a story."<br /><span>- Maria R.</span>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Contact Us</h2>
+    <div class="card">
+      <strong>Phone:</strong> (555) 123-4567<br />
+      <strong>Email:</strong> hello@litterateurcafe.com<br />
+      <strong>Address:</strong> 123 Culinary Street, Gourmet District<br />
+      <strong>Hours:</strong> Daily: 8:00 AM - 10:00 PM
+    </div>
+  </section>
+  <footer class="footer">
+    <p>© 2025 Litterateur Cafe. All rights reserved.</p>
     <script src="scripts.js"></script>
+  </footer>
 </body>
 </html>
