@@ -18,89 +18,60 @@
     </div>
     <div class="nav-actions">
       <button id="authButton" class="button">Login / Sign Up</button>
-      <div id="profile" class="profile">
-        <button class="profile-btn">
-          <div class="avatar" id="avatar"></div>
-          <span id="userName"></span>
-        </button>
-        <div class="dropdown">
-          <a href="#orders">My Orders</a>
-          <a href="#settings">Settings</a>
-          <a href="#" id="logoutBtn">Logout</a>
-        </div>
-      </div>
-      <button class="button cart-btn" id="cartBtn">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="9" cy="21" r="1"/>
-          <circle cx="20" cy="21" r="1"/>
-          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-        </svg>
-        <span id="cartCount" class="cart-count">0</span>
-      </button>
     </div>
   </nav>
-
-  <section id="home" class="hero">
+  <section class="hero" id="home">
     <div class="hero-content">
       <h1>Savor the Extraordinary</h1>
       <p>Premium cuisine delivered to your doorstep with elegance and care.</p>
       <button class="cta-btn">Explore Menu</button>
     </div>
   </section>
-
-  <section id="menu" class="menu">
+  <section class="menu" id="menu">
     <h2>Our Signature Menu</h2>
     <div class="menu-grid">
       <div class="menu-item">
-        <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400" alt="Gourmet Salad" />
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400" alt="Gourmet Salad" />
         <h3>Garden Fresh Salad</h3>
         <p>Organic greens with artisan dressing</p>
         <div class="price">₹450</div>
-        <button class="add-to-cart">Add to Cart</button>
       </div>
       <div class="menu-item">
         <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400" alt="Gourmet Pizza" />
         <h3>Truffle Margherita</h3>
         <p>Hand-tossed with black truffle oil</p>
         <div class="price">₹850</div>
-        <button class="add-to-cart">Add to Cart</button>
       </div>
       <div class="menu-item">
-        <img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400" alt="Gourmet Pasta" />
+        <img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400" alt="Gourmet Pasta" />
         <h3>Lobster Linguine</h3>
         <p>Fresh lobster in saffron cream</p>
         <div class="price">₹1200</div>
-        <button class="add-to-cart">Add to Cart</button>
       </div>
       <div class="menu-item">
-        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=400" alt="Gourmet Dessert" />
+        <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400" alt="Gourmet Dessert" />
         <h3>Chocolate Symphony</h3>
         <p>Belgian chocolate decadence</p>
         <div class="price">₹550</div>
-        <button class="add-to-cart">Add to Cart</button>
       </div>
     </div>
   </section>
-
-  <section id="about" class="about">
+  <section class="about" id="about">
     <h2>About Litterateur Cafe</h2>
     <p>We blend culinary artistry with convenience, bringing restaurant-quality meals to your home. Every dish is crafted with passion and precision.</p>
   </section>
-
-  <section id="contact" class="contact">
+  <section class="contact" id="contact">
     <h2>Get in Touch</h2>
     <form id="contactForm">
       <input type="text" placeholder="Your Name" required />
       <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Message" rows="5" required></textarea>
-      <button type="submit">Send Message</button>
+      <textarea placeholder="Your Message" required rows="5"></textarea>
+      <button type="submit" class="button">Send Message</button>
     </form>
   </section>
-
   <footer>
-    <p>&copy; 2024 Litterateur Cafe. All rights reserved.</p>
+    <p>© 2024 Litterateur Cafe. All rights reserved.</p>
   </footer>
-
   <script src="script.js"></script>
 </body>
 </html>
